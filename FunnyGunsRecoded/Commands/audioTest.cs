@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 
 namespace FunnyGunsRecoded.Commands
 {
+    /*
     [CommandHandler(typeof(RemoteAdminCommandHandler))]
     public class audioTest : ICommand
     {
@@ -22,5 +23,5 @@ namespace FunnyGunsRecoded.Commands
             response = "<b>Temporairly depricated</b>";
             return false;
         }
-    }
+    }*/
 }

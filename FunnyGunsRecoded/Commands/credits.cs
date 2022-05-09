@@ -18,7 +18,7 @@ namespace FunnyGunsRecoded.Commands
 
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
-            response = "<color=green>[ Funny Guns ]</color>\n" +
+            response = "\n<color=green>[ Funny Guns => info ]</color>\n" +
                 "<color=green>-- Разработчики --</color>\n" +
                 "<color=yellow>Treeshold#0001 (aka Star Butterfly) - Разработчик</color>\n" +
                 "<color=yellow>Dlorka#9909 (aka Tushkanchik) - Тестер</color>\n\n" +

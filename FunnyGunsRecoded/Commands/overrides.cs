@@ -115,6 +115,10 @@ namespace FunnyGunsRecoded.Commands
                                 return true;
                             }
                             break;
+                        case "skipstage":
+                            Plugin.SecondsBeforeNextStage = 1;
+                            response = "done.";
+                            return true;
                         default:
                             response = "Invalid Subcommand!";
                             return false;

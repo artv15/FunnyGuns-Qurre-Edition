@@ -31,12 +31,30 @@ namespace FunnyGunsRecoded.Commands
                         case "start":
                             if (!Plugin.isEngaged)
                             {
-                                Plugin.isEngaged = true;
-                                Timing.RunCoroutine(Coroutines.GameEvent.gameController(), "gameController");
-                                Timing.RunCoroutine(Coroutines.PlayerHUD.hudCoroutine(), "playerHUD");
+                                if (Qurre.API.Round.Started && !Qurre.API.Controllers.Alpha.Detonated)
+                                {
+                                    Plugin.isEngaged = true;
+                                    Timing.RunCoroutine(Coroutines.GameEvent.gameController(), "gameController");
+                                    Timing.RunCoroutine(Coroutines.PlayerHUD.hudCoroutine(), "playerHUD");
 
-                                response = "Success! Event is now started!";
-                                return true;
+                                    response = "Success! Event is now started!";
+                                    return true;
+                                }
+                                else if (!Qurre.API.Round.Started)
+                                {
+                                    response = "Round is not started u sicko!";
+                                    return false;
+                                }
+                                else if (Qurre.API.Controllers.Alpha.Detonated)
+                                {
+                                    response = "Warhead was detonated u sicko! Restart round!";
+                                    return false;
+                                }
+                                else
+                                {
+                                    response = "Unknown check was failed. Restart round!";
+                                    return false;
+                                }
                             }
                             else
                             {

@@ -21,12 +21,14 @@ namespace FunnyGunsRecoded.Coroutines
                 {
                     foreach (var pl in Qurre.API.Player.List)
                     {
-                        pl.ShowHint("\n\n\n\n\n\n\n\n\n\n\n\n<color=yellow>Стадия подготовки. До окончания подготовки осталось </color><color=green>" + Plugin.SecondsBeforeNextStage.ToString() + "</color> секунд(ы)" + "\n" +
+                        pl.ShowHint("\n\n\n\n\n\n\n\n\n\n<color=yellow>Стадия подготовки. До окончания подготовки осталось </color><color=green>" + Plugin.SecondsBeforeNextStage.ToString() + "</color> секунд(ы)" + "\n" +
                             "<color=green>Суть ивента</color>: Ваша задача истребить вражескую команду. Во время игры, будут добавляться мутаторы. Они меняют некоторые правила игры.\n" +
+                            "<color=red>Специально для людей, которые будут говорить, что это говно-ивент. Если вы уж это и делаете, то говорите хотя-бы почему.</color>\n" +
+                            //"<color=red>Если вы хотите узнать больше(что вряд-ли), то .fg_govnoivent в консоль (~)</color>\n" +
                             "<color=blue>Если вы хотите узнать имена разработчиков, то используйте</color> <color=red>.fg_info</color><color=blue> в консоли (~)</color>", 1f);
                     }
                 }
-                else if (Plugin.Stage == 4) 
+                else if (Plugin.Stage == 5) 
                 {
                     foreach (var pl in Qurre.API.Player.List)
                     {
@@ -35,17 +37,20 @@ namespace FunnyGunsRecoded.Coroutines
                 }
                 else
                 {
-                    string color = "red";
+                    string color = "#fc2d2d";
                     switch (Plugin.Stage)
                     {
                         case 1:
-                            color = "green";
+                            color = "#42fc2d";
                             break;
                         case 2:
-                            color = "yellow";
+                            color = "#bafc2d";
                             break;
                         case 3:
-                            color = "red";
+                            color = "#fcbe2d";
+                            break;
+                        case 4:
+                            color = "#fc2d2d";
                             break;
                     }
 
@@ -87,6 +92,35 @@ namespace FunnyGunsRecoded.Coroutines
                                 i++;
                             }
                         }
+                    }
+                    // Hud implementation
+                    if (Plugin.Stage == 2)
+                    {
+                        var colorAlert = "red";
+                        switch (Plugin.SecondsBeforeNextStage % 2)
+                        {
+                            case 0:
+                                colorAlert = "red";
+                                break;
+                            case 1:
+                                colorAlert = "white";
+                                break;
+                        }
+                        str += "\n<color=" + colorAlert + ">Закрытие лайт зоны в начале следующей стадии!</color>";
+                    }
+                    if (Plugin.Stage == 3)
+                    {
+                        var colorAlert = "red";
+                        switch (Plugin.SecondsBeforeNextStage % 2)
+                        {
+                            case 0:
+                                colorAlert = "red";
+                                break;
+                            case 1:
+                                colorAlert = "white";
+                                break;
+                        }
+                        str += "\n<color=" + colorAlert + ">Закрытие хард зоны в начале следующей стадии!</color>";
                     }
 
                     foreach (var pl in Qurre.API.Player.List)

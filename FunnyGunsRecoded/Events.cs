@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MEC;
+﻿using MEC;
 
 namespace FunnyGunsRecoded
 {
@@ -50,36 +45,77 @@ namespace FunnyGunsRecoded
             }
         }
 
-        public void hurting(Qurre.API.Events.DamageProcessEvent ev)
+        public void droppingAmmo(Qurre.API.Events.DropAmmoEvent ev)
         {
-            if (Plugin.damage3x)
-            {
-                ev.Amount = ev.Amount * 3;
-            }
-            if (Classes.Mutator.isEngaged("speed++") && ev.DamageType == Qurre.API.Objects.DamageTypes.Scp207)
+            if (Plugin.isEngaged)
             {
                 ev.Allowed = false;
-                Qurre.Log.Warn("Disabling damage, due to it being cola effect!");
+                ev.Player.Broadcast("<color=red>слыш, так незя.</color>", 1, true);
             }
-            else if (ev.Amount < 20)
+        }
+
+        public void hurting(Qurre.API.Events.DamageProcessEvent ev)
+        {
+            if ((Plugin.isEngaged && ev.Allowed && ev.Target.Role != ev.Attacker.Role) || ev.DamageType == Qurre.API.Objects.DamageTypes.Scp207)
             {
-                ev.Target.EnableEffect(Qurre.API.Objects.EffectType.Concussed, 10);
-                ev.Target.EnableEffect(Qurre.API.Objects.EffectType.Deafened, 10);
+                /*if (Plugin.damage3x)
+                {
+                    ev.Amount = ev.Amount * 3;
+                }*/
+                if (Classes.Mutator.isEngaged("bleeding"))
+                {
+                    if ((ev.DamageType == Qurre.API.Objects.DamageTypes.Com15 ||
+                        ev.DamageType == Qurre.API.Objects.DamageTypes.AK ||
+                        ev.DamageType == Qurre.API.Objects.DamageTypes.Com18 ||
+                        ev.DamageType == Qurre.API.Objects.DamageTypes.CrossVec ||
+                        ev.DamageType == Qurre.API.Objects.DamageTypes.E11SR ||
+                        ev.DamageType == Qurre.API.Objects.DamageTypes.FSP9 ||
+                        ev.DamageType == Qurre.API.Objects.DamageTypes.Logicer ||
+                        ev.DamageType == Qurre.API.Objects.DamageTypes.Revolver ||
+                        ev.DamageType == Qurre.API.Objects.DamageTypes.Shotgun)) // oof
+                    {
+                        ev.Target.EnableEffect(Qurre.API.Objects.EffectType.Bleeding, 10, false);
+                    }
+                }
+                if (Classes.Mutator.isEngaged("badBullets") && (ev.DamageType == Qurre.API.Objects.DamageTypes.Com15 ||
+                        ev.DamageType == Qurre.API.Objects.DamageTypes.AK ||
+                        ev.DamageType == Qurre.API.Objects.DamageTypes.Com18 ||
+                        ev.DamageType == Qurre.API.Objects.DamageTypes.CrossVec ||
+                        ev.DamageType == Qurre.API.Objects.DamageTypes.E11SR ||
+                        ev.DamageType == Qurre.API.Objects.DamageTypes.FSP9 ||
+                        ev.DamageType == Qurre.API.Objects.DamageTypes.Logicer ||
+                        ev.DamageType == Qurre.API.Objects.DamageTypes.Revolver ||
+                        ev.DamageType == Qurre.API.Objects.DamageTypes.Shotgun)) // oof x2
+                {
+                    int rnd = UnityEngine.Random.Range(0, 11);
+                    if (rnd < 4)
+                    {
+                        ev.Allowed = false;
+                    }
+                }
+                if (Classes.Mutator.isEngaged("speed++") && ev.DamageType == Qurre.API.Objects.DamageTypes.Scp207)
+                {
+                    ev.Allowed = false;
+                }
+                else if (ev.Amount < 20)
+                {
+                    ev.Target.EnableEffect(Qurre.API.Objects.EffectType.Concussed, 3);
+                    ev.Target.EnableEffect(Qurre.API.Objects.EffectType.Deafened, 3);
+                }
+                else if (ev.Amount < 50)
+                {
+                    ev.Target.EnableEffect(Qurre.API.Objects.EffectType.Concussed, 5);
+                    ev.Target.EnableEffect(Qurre.API.Objects.EffectType.Deafened, 5);
+                    ev.Target.EnableEffect(Qurre.API.Objects.EffectType.Blinded, 2);
+                }
+                else
+                {
+                    ev.Target.EnableEffect(Qurre.API.Objects.EffectType.Concussed, 7);
+                    ev.Target.EnableEffect(Qurre.API.Objects.EffectType.Deafened, 7);
+                    ev.Target.EnableEffect(Qurre.API.Objects.EffectType.Blinded, 3);
+                    ev.Target.EnableEffect(Qurre.API.Objects.EffectType.SinkHole, 3);
+                }
             }
-            else if (ev.Amount < 50)
-            {
-                ev.Target.EnableEffect(Qurre.API.Objects.EffectType.Concussed, 10);
-                ev.Target.EnableEffect(Qurre.API.Objects.EffectType.Deafened, 10);
-                ev.Target.EnableEffect(Qurre.API.Objects.EffectType.Blinded, 4);
-            }
-            else
-            {
-                ev.Target.EnableEffect(Qurre.API.Objects.EffectType.Concussed, 14);
-                ev.Target.EnableEffect(Qurre.API.Objects.EffectType.Deafened, 14);
-                ev.Target.EnableEffect(Qurre.API.Objects.EffectType.Blinded, 6);
-                ev.Target.EnableEffect(Qurre.API.Objects.EffectType.SinkHole, 6);
-            }
-            
         }
 
         public void StopAllEventShit()
@@ -87,18 +123,35 @@ namespace FunnyGunsRecoded
             Plugin.isEngaged = false;
             Plugin.isAmmoInfinite = true;
             Plugin.engagedMutators.Clear();
-            Plugin.damage3x = false;
+            //Plugin.damage3x = false;
             Plugin.checkForEndgame = true;
             Timing.KillCoroutines("endgameChecker");
             Timing.KillCoroutines("insDeath");
             Timing.KillCoroutines("gameController");
             Timing.KillCoroutines("playerHUD");
+            Timing.KillCoroutines("zoneDecont");
+            foreach (var lift in Qurre.API.Map.Lifts)
+            {
+                if (lift.Type == Qurre.API.Objects.LiftType.ElBRight || lift.Type == Qurre.API.Objects.LiftType.ElBLeft ||
+                    lift.Type == Qurre.API.Objects.LiftType.ElALeft || lift.Type == Qurre.API.Objects.LiftType.ElARight)
+                {
+                    lift.Locked = false;
+                }
+            }
+            foreach (var door in Qurre.API.Map.Doors)
+            {
+                if (door.Type == Qurre.API.Objects.DoorType.HCZ_Door)
+                {
+                    door.Open = false;
+                    door.Locked = false;
+                }
+            }
         }
 
         public void TeamRespawn(Qurre.API.Events.TeamRespawnEvent ev)
         {
             if (Plugin.isEngaged)
-            ev.Allowed = false;
+                ev.Allowed = false;
         }
 
         public void WaitingForPlayers()
@@ -166,7 +219,7 @@ namespace FunnyGunsRecoded
                 }
             }, (ev) =>
             {
-                Timing.CallDelayed(5f, () => 
+                Timing.CallDelayed(5f, () =>
                 ev.Player.EnableEffect(Qurre.API.Objects.EffectType.Scp207));
             }, () =>
             {
@@ -195,7 +248,7 @@ namespace FunnyGunsRecoded
 
             }));
 
-            Plugin.loadedMutators.Add(new Classes.Mutator("damage++", "<color=red>Урон увеличен (3x)</color>", () =>
+            /*Plugin.loadedMutators.Add(new Classes.Mutator("damage++", "<color=red>Урон увеличен (3x)</color>", () =>
             {
                 Plugin.damage3x = true;
             }, () =>
@@ -207,7 +260,7 @@ namespace FunnyGunsRecoded
             }, () =>
             {
 
-            }));
+            }));*/
 
             Plugin.loadedMutators.Add(new Classes.Mutator("legalWH", "<color=green>Рентгеновское зрение</color>", () =>
             {
@@ -230,12 +283,41 @@ namespace FunnyGunsRecoded
 
             }));
 
-            Plugin.loadedMutators.Add(new Classes.Mutator("tutorialAssault", "<color=#07f773>Штурм туториалов [INITING]</color>", () =>
+            Plugin.loadedMutators.Add(new Classes.Mutator("tutorialAssault", "<color=#07f773>Штурм туториалов (Подготовка)</color>", () =>
             {
+                Timing.CallDelayed(1f, () => Plugin.SecondsBeforeNextStage = 129); //This is really specific!
                 Timing.RunCoroutine(Coroutines.Mutators.tutorialAssault_engaged(), "TutorialAssault");
             }, () =>
             {
                 Timing.KillCoroutines("TutorialAssault");
+            }, (ev) =>
+            {
+
+            }, () =>
+            {
+
+            }));
+
+            Plugin.loadedMutators.Add(new Classes.Mutator("bleeding", "<color=red>Кровотечение от огнестрельных ранений</color>", () =>
+            {
+                //we do nothing, mutator exists just to be checked for.
+            }, () =>
+            {
+                //we do nothing...
+            }, (ev) =>
+            {
+
+            }, () =>
+            {
+
+            }));
+
+            Plugin.loadedMutators.Add(new Classes.Mutator("badBullets", "<color=red>Некоторые патроны - холостые</color>", () =>
+            {
+                //we do nothing, mutator exists just to be checked for.
+            }, () =>
+            {
+                //we do nothing...
             }, (ev) =>
             {
 

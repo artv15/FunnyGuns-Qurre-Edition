@@ -23,7 +23,6 @@ namespace FunnyGunsRecoded.Coroutines
 
         public static IEnumerator<float> tutorialAssault_engaged()
         {
-            Plugin.SecondsBeforeNextStage = 129; //This is really specific!
             foreach (var mut in Plugin.engagedMutators)
             {
                 if (mut.commandName == "tutorialAssault")
@@ -61,10 +60,10 @@ namespace FunnyGunsRecoded.Coroutines
                         pl.AddItem(ItemType.GunFSP9);
                         pl.AddItem(ItemType.KeycardNTFLieutenant);
                         pl.EnableEffect(Qurre.API.Objects.EffectType.Flashed, 3f);
+                        pl.GodMode = true;
                         Timing.CallDelayed(3f, () =>
                         {
                             pl.Position = new UnityEngine.Vector3(86.7f, 988.5f, -68.2f);
-                            pl.GodMode = true;
                             Timing.CallDelayed(4f, () => pl.GodMode = false);
                         });
                     }
@@ -87,7 +86,7 @@ namespace FunnyGunsRecoded.Coroutines
                 if (mut.commandName == "tutorialAssault")
                 {
                     mut.disengaged.Invoke();
-                    mut.displayName = "<color=#07f773>Штурм туториалов [INITING]</color>";
+                    mut.displayName = "<color=#07f773>Штурм туториалов (Подготовка)</color>"; // For somewhat reason, if we change the mutator in engaged mutators, it is changed in loaded mutators. Maybe because we just point to the same place in memory. Maybe not.
                     Plugin.engagedMutators.Remove(mut);
                     yield break;
                 }

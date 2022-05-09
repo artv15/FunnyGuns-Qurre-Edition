@@ -4,8 +4,13 @@
     {
         #region overrides
         public override string Developer { get; } = "Treeshold (aka Star Butterfly) | I hate letter g"; /* <- plugin developer(optional) */
-        public override string Name { get; } = "Funny Guns recoded"; /* <- plugin name(optional) */
-        public override System.Version Version { get; } = new System.Version(0, 6, 0, 0); /* <- plugin version(optional) */
+        public override string Name { get; } = "Funny Guns"
+#if DEBUG
+            + " (Debug Edition)";
+#else
+            + " (Release Edition)";
+#endif
+        public override System.Version Version { get; } = new System.Version(0, 7, 0, 3); /* <- plugin version(optional) */
         public static Config? CustomConfig { get; private set; } /* <- creating a new config class */
 
 #if DEBUG
@@ -60,10 +65,10 @@
         /// </summary>
         public static int SecondsBeforeNextStage = 0;
 
-        /// <summary>
+        /*/// <summary>
         /// Used by damage++ mutator.
         /// </summary>
-        public static bool damage3x = false;
+        public static bool damage3x = false;*/
 
         /// <summary>
         /// Stage.
@@ -71,10 +76,12 @@
         /// 1 = Stage 1 (No mutators)
         /// 2 = Stage 2 (One mutator)
         /// 3 = Stage 3 (Two mutators)
-        /// 4 = Instant Death (No mutators, 2 HP is drained every second)
+        /// 4 = Stage 4 (Three mutators)
+        /// 5 = Instant Death (No mutators, 2 HP is drained every second)
         /// </summary>
         public static int Stage = 0;
 
+        [Obsolete("No longer in use, due to mutator being non-existant!")]
         public static bool isAmmoInfinite = true;
         #endregion
 
@@ -90,6 +97,7 @@
             Qurre.Events.Player.DamageProcess += ev.hurting;
             Qurre.Events.Player.RechargeWeapon += ev.onReloading;
             Qurre.Events.Round.TeamRespawn += ev.TeamRespawn;
+            Qurre.Events.Player.DropAmmo += ev.droppingAmmo;
         }
 
         public override void Disable()
@@ -101,6 +109,7 @@
             Qurre.Events.Player.DamageProcess -= ev.hurting;
             Qurre.Events.Player.RechargeWeapon -= ev.onReloading;
             Qurre.Events.Round.TeamRespawn -= ev.TeamRespawn;
+            Qurre.Events.Player.DropAmmo -= ev.droppingAmmo;
         }
         #endregion
     }
