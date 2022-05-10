@@ -233,7 +233,7 @@ namespace FunnyGunsRecoded.Coroutines
                     {
                         if (pl.Zone == Qurre.API.Objects.ZoneType.Light)
                         {
-                            pl.Damage(2f, PlayerStatsSystem.DeathTranslations.Unknown);
+                            pl.Damage(10f, PlayerStatsSystem.DeathTranslations.Unknown);
                         }
                     }
                 }
@@ -243,7 +243,7 @@ namespace FunnyGunsRecoded.Coroutines
                     {
                         if (pl.Zone == Qurre.API.Objects.ZoneType.Heavy)
                         {
-                            pl.Damage(2f, PlayerStatsSystem.DeathTranslations.Unknown);
+                            pl.Damage(10f, PlayerStatsSystem.DeathTranslations.Unknown);
                         }
                     }
                 }
