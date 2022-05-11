@@ -10,7 +10,7 @@
 #else
             + " (Release Edition)";
 #endif
-        public override System.Version Version { get; } = new System.Version(0, 7, 0, 4); /* <- plugin version(optional) */
+        public override System.Version Version { get; } = new System.Version(0, 7, 0, 5); /* <- plugin version(optional) */
         public static Config? CustomConfig { get; private set; } /* <- creating a new config class */
 
 #if DEBUG
@@ -26,6 +26,11 @@
         /// Amount of Chaos Agents, assigned by HUD Coroutine
         /// </summary>
         public static int CI = 0;
+
+        /// <summary>
+        /// Some sort of hotfix, i guess...
+        /// </summary>
+        public static int AssaultWasStaredHowManyTimes = 0;
 
         /// <summary>
         /// Amount of MTF, assigned by HUD Coroutine

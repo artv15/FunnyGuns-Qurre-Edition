@@ -263,7 +263,7 @@ namespace FunnyGunsRecoded.Coroutines
                     spectators++;
                 }
             }
-            if (!(plrsAlive <= spectators * 2) && !(UnityEngine.Random.Range(0, 11) <= 4))
+            if (!(plrsAlive <= spectators) && !(UnityEngine.Random.Range(0, 11) <= 4) && Plugin.AssaultWasStaredHowManyTimes < 1)
             {
                 while (true)
                 {
@@ -299,6 +299,7 @@ namespace FunnyGunsRecoded.Coroutines
             }
             else
             {
+                Plugin.AssaultWasStaredHowManyTimes++; //Hotfix, but it works, I guess...
                 Qurre.Log.Info("Called for mutator selection. Bypassed normal assignment, due to spectactors. Assigning tutorialAssault mutator.");
                 foreach (var mut in Plugin.loadedMutators)
                 {
