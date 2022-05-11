@@ -85,9 +85,6 @@
         /// 5 = Instant Death (No mutators, 2 HP is drained every second)
         /// </summary>
         public static int Stage = 0;
-
-        [Obsolete("No longer in use, due to mutator being non-existant!")]
-        public static bool isAmmoInfinite = true;
         #endregion
 
         #region Enable/Disable

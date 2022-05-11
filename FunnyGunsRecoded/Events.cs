@@ -20,7 +20,7 @@ namespace FunnyGunsRecoded
 
         public void onReloading(Qurre.API.Events.RechargeWeaponEvent ev)
         {
-            if (Plugin.isEngaged && Plugin.isAmmoInfinite)
+            if (Plugin.isEngaged)
             {
                 ev.Player.Ammo12Gauge = 24;
                 ev.Player.Ammo44Cal = 120;
@@ -121,7 +121,6 @@ namespace FunnyGunsRecoded
         public void StopAllEventShit()
         {
             Plugin.isEngaged = false;
-            Plugin.isAmmoInfinite = true;
             Plugin.engagedMutators.Clear();
             //Plugin.damage3x = false;
             Plugin.checkForEndgame = true;
