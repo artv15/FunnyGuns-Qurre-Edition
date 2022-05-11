@@ -23,6 +23,7 @@ namespace FunnyGunsRecoded.Coroutines
                     {
                         pl.ShowHint("\n\n\n\n\n\n\n\n\n\n<color=yellow>Стадия подготовки. До окончания подготовки осталось </color><color=green>" + Plugin.SecondsBeforeNextStage.ToString() + "</color> секунд(ы)" + "\n" +
                             "<color=green>Суть ивента</color>: Ваша задача истребить вражескую команду. Во время игры, будут добавляться мутаторы. Они меняют некоторые правила игры.\n" +
+                            "<color=green>Во время подготовки лифты не могут быть вызваны.</color>\n" +
                             "<color=red>Специально для людей, которые будут говорить, что это говно-ивент. Если вы уж это и делаете, то говорите хотя-бы почему.</color>\n" +
                             //"<color=red>Если вы хотите узнать больше(что вряд-ли), то .fg_govnoivent в консоль (~)</color>\n" +
                             "<color=blue>Если вы хотите узнать имена разработчиков, то используйте</color> <color=red>.fg_info</color><color=blue> в консоли (~)</color>", 1f);

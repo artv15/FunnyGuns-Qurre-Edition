@@ -25,10 +25,17 @@ namespace FunnyGunsRecoded.Coroutines
             foreach (var door in Qurre.API.Map.Doors)
             {
                 door.Open = false;
-                if (door.Name == "SURFACE_GATE" || door.Type == Qurre.API.Objects.DoorType.Gate_A || door.Type == Qurre.API.Objects.DoorType.Gate_B)
+                if (door.Name == "SURFACE_GATE")
                 {
                     door.Locked = true;
                     break;
+                }
+            }
+            foreach (var elev in Qurre.API.Map.Lifts)
+            {
+                if (elev.Type == Qurre.API.Objects.LiftType.GateA || elev.Type == Qurre.API.Objects.LiftType.GateB)
+                {
+                    elev.Locked = true;
                 }
             }
 
@@ -121,6 +128,13 @@ namespace FunnyGunsRecoded.Coroutines
                 {
                     door.Locked = false;
                     break;
+                }
+            }
+            foreach (var elev in Qurre.API.Map.Lifts)
+            {
+                if (elev.Type == Qurre.API.Objects.LiftType.GateA || elev.Type == Qurre.API.Objects.LiftType.GateB)
+                {
+                    elev.Locked = false;
                 }
             }
             Timing.RunCoroutine(endgameChecker(), "endgameChecker");
