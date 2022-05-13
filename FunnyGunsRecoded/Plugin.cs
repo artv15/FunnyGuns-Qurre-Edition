@@ -10,7 +10,7 @@
 #else
             + " (Release Edition)";
 #endif
-        public override System.Version Version { get; } = new System.Version(0, 7, 0, 6); /* <- plugin version(optional) */
+        public override System.Version Version { get; } = new System.Version(0, 7, 0, 7); /* <- plugin version(optional) */
         public static Config? CustomConfig { get; private set; } /* <- creating a new config class */
 
 #if DEBUG

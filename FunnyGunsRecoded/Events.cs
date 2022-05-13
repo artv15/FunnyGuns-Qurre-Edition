@@ -120,6 +120,11 @@ namespace FunnyGunsRecoded
 
         public void StopAllEventShit()
         {
+            foreach (var mut in Plugin.engagedMutators)
+            {
+                mut.disengaged.Invoke();
+                Plugin.engagedMutators.Remove(mut);
+            }
             Plugin.isEngaged = false;
             Plugin.engagedMutators.Clear();
             //Plugin.damage3x = false;
@@ -143,6 +148,13 @@ namespace FunnyGunsRecoded
                 {
                     door.Open = false;
                     door.Locked = false;
+                }
+            }
+            foreach (var elev in Qurre.API.Map.Lifts)
+            {
+                if (elev.Type == Qurre.API.Objects.LiftType.GateA || elev.Type == Qurre.API.Objects.LiftType.GateB)
+                {
+                    elev.Locked = false;
                 }
             }
         }
