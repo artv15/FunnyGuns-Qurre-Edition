@@ -3,14 +3,14 @@ My old autoevent plugin, but now made with Qurre.
 
 # Installation
 To install FunnyGuns, you need to download the binary first! It's located in the releases.
-After downloading binary, drop it in %appdata%/Qurre/Plugins (or ~/.config/Qurre.Plugins) folder.
+After downloading binary, drop it in %appdata%/Qurre/Plugins (or ~/.config/Qurre/Plugins) folder.
 
 # How does this plugin work (in a nutshell)
 ## blah blah blah API for mutators
 This is basically an API for mutators. There is a class called mutator and two lists. One named
 EngagedMutators, other one named LoadedMutators. Loaded mutators is the list from which to pick mutators from.
 You can even add mutator to EngagedMutators without having it being added to LoadedMutators. However, there
-is usually no need to do so, because mutators are expected to being picked from loadedMutators.
+is usually no need to do so, because mutators are expected to be picked from loadedMutators.
 
 ## Mutator class structure
 Mutator cosists of following fields:
