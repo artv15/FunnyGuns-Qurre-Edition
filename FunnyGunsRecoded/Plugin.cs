@@ -150,17 +150,17 @@ namespace FunnyGunsRecoded
                         Qurre.Log.Error($"WARNING! Your version of FunnyGuns is one major version behind! Please, UPDATE THE PLUGIN FOR GOD'S SAKE!\nYour version: {this.Version.Major}.{this.Version.Minor}.{this.Version.Build}.{this.Version.Revision}; " +
                             $"Remote version: {verRemote.major}.{verRemote.minor}.{verRemote.patch}.{verRemote.revision}");
                     }
-                    else if (this.Version.Minor < verRemote.minor)
+                    else if (this.Version.Minor < verRemote.minor && this.Version.Major >= verRemote.major)
                     {
                         Qurre.Log.Warn($"Hey! Your version of FunnyGuns is one minor version behind! Update the plugin if you want to!\nYour version: {this.Version.Major}.{this.Version.Minor}.{this.Version.Build}.{this.Version.Revision}; " +
                             $"Remote version: {verRemote.major}.{verRemote.minor}.{verRemote.patch}.{verRemote.revision}");
                     }
-                    else if (this.Version.Build < verRemote.patch)
+                    else if (this.Version.Build < verRemote.patch && this.Version.Minor >= verRemote.minor && this.Version.Major >= verRemote.major)
                     {
                         Qurre.Log.Info($"Hey! Your version of FunnyGuns is one patch/build version behind! There is no need to update the plugin right away, however, I recommend to do so.\nYour version: {this.Version.Major}.{this.Version.Minor}.{this.Version.Build}.{this.Version.Revision}; " +
                             $"Remote version: {verRemote.major}.{verRemote.minor}.{verRemote.patch}.{verRemote.revision}");
                     }
-                    else if (this.Version.Revision < verRemote.revision)
+                    else if (this.Version.Revision < verRemote.revision && this.Version.Build >= verRemote.patch && this.Version.Minor >= verRemote.minor && this.Version.Major >= verRemote.major)
                     {
                         Qurre.Log.Info($"Psst! Your version of FunnyGuns is one revision version behind! Update if you want so!\nYour version: {this.Version.Major}.{this.Version.Minor}.{this.Version.Build}.{this.Version.Revision}; " +
                             $"Remote version: {verRemote.major}.{verRemote.minor}.{verRemote.patch}.{verRemote.revision}");
