@@ -1,4 +1,7 @@
 ﻿using MEC;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FunnyGunsRecoded.Coroutines
 {
@@ -194,7 +197,7 @@ namespace FunnyGunsRecoded.Coroutines
                 {
                     pl.Damage(1, PlayerStatsSystem.DeathTranslations.Unknown);
                 }
-                yield return Timing.WaitForSeconds(0.5f);
+                yield return Timing.WaitForSeconds(0.25f);
             }
         }
 
@@ -277,13 +280,13 @@ namespace FunnyGunsRecoded.Coroutines
                     spectators++;
                 }
             }
-            if (!(plrsAlive <= spectators) && !(UnityEngine.Random.Range(0, 11) <= 4) && Plugin.AssaultWasStaredHowManyTimes < 1)
+            if (((!(plrsAlive <= spectators) && !(UnityEngine.Random.Range(0, 11) <= 4)) || (spectators > 8)) && Plugin.AssaultWasStaredHowManyTimes < 1)
             {
                 while (true)
                 {
                     try
                     {
-                        int randsel = UnityEngine.Random.Range(0, Plugin.loadedMutators.Count);
+                        int randsel = UnityEngine.Random.Range(0, Plugin.loadedMutators.Count());
                         Qurre.Log.Info("Called for mutator selection. Index: " + randsel.ToString() + ". CommandName of the mutator: " + Plugin.loadedMutators[randsel].commandName + ".");
                         if (!Classes.Mutator.isEngaged(Plugin.loadedMutators.ElementAt(randsel).commandName))
                         {
@@ -305,7 +308,7 @@ namespace FunnyGunsRecoded.Coroutines
                     catch (Exception ex)
                     {
                         Qurre.Log.Error($"An error occured during mutator assignment! Error: {ex.Message}. Adding a non-functional error mutator!");
-                        var errorMutator = new Classes.Mutator("error", "<color=red>[ERROR] Error.</color>", () => { }, () => { }, (ev) => { }, () => { });
+                        var errorMutator = new Classes.Mutator("error", "<color=red>Error.</color>", () => { }, () => { }, (ev) => { }, () => { });
                         Plugin.engagedMutators.Add(errorMutator);
                         break;
                     }

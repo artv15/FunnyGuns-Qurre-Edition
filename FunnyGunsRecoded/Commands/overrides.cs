@@ -1,4 +1,5 @@
 ﻿using CommandSystem;
+using System;
 
 namespace FunnyGunsRecoded.Commands
 {
@@ -8,7 +9,7 @@ namespace FunnyGunsRecoded.Commands
     {
         public string Command => "fg_override";
 
-        public string[]? Aliases => null;
+        public string[] Aliases => null;
 
         public string Description => "Used for development!";
 

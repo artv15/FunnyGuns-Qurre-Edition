@@ -1,5 +1,6 @@
 ﻿using CommandSystem;
 using MEC;
+using System;
 
 namespace FunnyGunsRecoded.Commands
 {
@@ -8,7 +9,7 @@ namespace FunnyGunsRecoded.Commands
     {
         public string Command => "fg_event";
 
-        public string[]? Aliases => null;
+        public string[] Aliases => null;
 
         public string Description => "Controls event, enter command without arguments to see all subcommands";
 
