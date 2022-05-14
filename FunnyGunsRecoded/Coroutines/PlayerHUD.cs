@@ -56,11 +56,15 @@ namespace FunnyGunsRecoded.Coroutines
                     }
 
                     // This is not an optimal solution to this, but fine
+                    // Edit: this aged quickly
 
                     Plugin.NTF = 0;
                     Plugin.CI = 0;
 
-                    foreach (var pl in Qurre.API.Player.List)
+                    Plugin.NTF = Qurre.API.Player.List.Count(pl => pl.Role == RoleType.NtfSergeant);
+                    Plugin.CI = Qurre.API.Player.List.Count(pl => pl.Role == RoleType.ChaosRifleman);
+
+                    /*foreach (var pl in Qurre.API.Player.List)
                     {
                         if (pl.Role == RoleType.NtfSergeant)
                         {
@@ -70,7 +74,7 @@ namespace FunnyGunsRecoded.Coroutines
                         {
                             Plugin.CI++;
                         }
-                    }
+                    }*/
 
                     // Plz don't beat me for that
                     // And also, why doesn't qurre have Qurre.API.Objects.Player.isNTF or .isCI field?
