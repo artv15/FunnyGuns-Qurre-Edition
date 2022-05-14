@@ -1,5 +1,24 @@
 # FunnyGuns-Qurre-Edition
 My old autoevent plugin, but now made with Qurre.
 
-# sorry, i am lazy
-I am too lazy to make a normal readme (for now). If you want to get more info how everything works, check out source code, I tried to make everything "easily understandable".
+# Installation
+To install FunnyGuns, you need to download the binary first! It's located in the releases.
+After downloading binary, drop it in %appdata%/Qurre/Plugins (or ~/.config/Qurre.Plugins) folder.
+
+# How does this plugin work (in a nutshell)
+## blah blah blah API for mutators
+This is basically an API for mutators. There is a class called mutator and two lists. One named
+EngagedMutators, other one named LoadedMutators. Loaded mutators is the list from which to pick mutators from.
+You can even add mutator to EngagedMutators without having it being added to LoadedMutators. However, there
+is usually no need to do so, because mutators are expected to being picked from loadedMutators.
+
+## Mutator class structure
+Mutator cosists of following fields:
+<ol>
+  <li>commandName: Used for development (engaging/disengaging from fg_override, checking if it is engaged), basically displayName, but scuffed.</li>
+  <li>displayName: The name of the mutator in the engaged mutators list. Please, use TextMeshPro to color it!</li>
+  <li>engaged: Action, executed upon being engaged</li>
+  <li>disengaged: Action, executied upon being disengaged</li>
+  <li>respawn: Action, executed upon player respawn. Gets ChangingRole eventArgs</li>
+  <li>stageChange: Action, executed upon stage change</li>
+</ol>
