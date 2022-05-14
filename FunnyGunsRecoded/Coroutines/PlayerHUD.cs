@@ -38,6 +38,7 @@ namespace FunnyGunsRecoded.Coroutines
                 }
                 else
                 {
+                    //Color stuff
                     string color = "#fc2d2d";
                     switch (Plugin.Stage)
                     {
@@ -61,6 +62,7 @@ namespace FunnyGunsRecoded.Coroutines
                     Plugin.NTF = 0;
                     Plugin.CI = 0;
 
+                    //Yup, this is better
                     Plugin.NTF = Qurre.API.Player.List.Count(pl => pl.Role == RoleType.NtfSergeant);
                     Plugin.CI = Qurre.API.Player.List.Count(pl => pl.Role == RoleType.ChaosRifleman);
 

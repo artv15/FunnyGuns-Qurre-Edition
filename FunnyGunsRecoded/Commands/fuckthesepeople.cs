@@ -7,7 +7,8 @@ using CommandSystem;
 
 namespace FunnyGunsRecoded.Commands
 {
-    [CommandHandler(typeof(GameConsoleCommandHandler))]
+    // Removed... again...
+    //[CommandHandler(typeof(GameConsoleCommandHandler))]
     public class fuckthesepeople : ICommand
     {
         public string Command => "fg_govnoivent";
