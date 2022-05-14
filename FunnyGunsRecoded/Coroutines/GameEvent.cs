@@ -284,7 +284,7 @@ namespace FunnyGunsRecoded.Coroutines
                     try
                     {
                         int randsel = UnityEngine.Random.Range(0, Plugin.loadedMutators.Count);
-                        Qurre.Log.Info("Called for mutator selection. Index: " + randsel.ToString());
+                        Qurre.Log.Info("Called for mutator selection. Index: " + randsel.ToString() + ". CommandName of the mutator: " + Plugin.loadedMutators[randsel].commandName + ".");
                         if (!Classes.Mutator.isEngaged(Plugin.loadedMutators.ElementAt(randsel).commandName))
                         {
                             Qurre.Log.Info("Mutator is not already engaged, assigning it, invoking all stageChange methods.");
@@ -304,7 +304,7 @@ namespace FunnyGunsRecoded.Coroutines
                     }
                     catch (Exception ex)
                     {
-                        Qurre.Log.Error($"An error occured during mutator assignment! Error: {ex.Message}");
+                        Qurre.Log.Error($"An error occured during mutator assignment! Error: {ex.Message}. Adding a non-functional error mutator!");
                         var errorMutator = new Classes.Mutator("error", "<color=red>[ERROR] Error.</color>", () => { }, () => { }, (ev) => { }, () => { });
                         Plugin.engagedMutators.Add(errorMutator);
                         break;
@@ -315,14 +315,22 @@ namespace FunnyGunsRecoded.Coroutines
             {
                 Plugin.AssaultWasStaredHowManyTimes++; //Hotfix, but it works, I guess...
                 Qurre.Log.Info("Called for mutator selection. Bypassed normal assignment, due to spectactors. Assigning tutorialAssault mutator.");
-                foreach (var mut in Plugin.loadedMutators)
+                var mut = new Classes.Mutator("tutorialAssault", "<color=#07f773>Штурм туториалов (Подготовка)</color>", () =>
                 {
-                    if (mut.commandName == "tutorialAssault")
-                    {
-                        mut.engaged.Invoke();
-                        Plugin.engagedMutators.Add(mut);
-                    }
-                }
+                    Timing.CallDelayed(1f, () => Plugin.SecondsBeforeNextStage = 129); //This is really specific!
+                    Timing.RunCoroutine(Coroutines.Mutators.tutorialAssault_engaged(), "TutorialAssault");
+                }, () =>
+                {
+                    Timing.KillCoroutines("TutorialAssault");
+                }, (ev) =>
+                {
+
+                }, () =>
+                {
+
+                });
+                mut.engaged.Invoke();
+                Plugin.engagedMutators.Add(mut);
             }
         }
     }

@@ -294,21 +294,6 @@ namespace FunnyGunsRecoded
 
             }));
 
-            Plugin.loadedMutators.Add(new Classes.Mutator("tutorialAssault", "<color=#07f773>Штурм туториалов (Подготовка)</color>", () =>
-            {
-                Timing.CallDelayed(1f, () => Plugin.SecondsBeforeNextStage = 129); //This is really specific!
-                Timing.RunCoroutine(Coroutines.Mutators.tutorialAssault_engaged(), "TutorialAssault");
-            }, () =>
-            {
-                Timing.KillCoroutines("TutorialAssault");
-            }, (ev) =>
-            {
-
-            }, () =>
-            {
-
-            }));
-
             Plugin.loadedMutators.Add(new Classes.Mutator("bleeding", "<color=red>Кровотечение от огнестрельных ранений</color>", () =>
             {
                 //we do nothing, mutator exists just to be checked for.
