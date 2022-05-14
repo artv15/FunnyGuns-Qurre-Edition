@@ -161,6 +161,7 @@ namespace FunnyGunsRecoded
 
         public void TeamRespawn(Qurre.API.Events.TeamRespawnEvent ev)
         {
+            // It JuSt WoRkS!
             if (Plugin.isEngaged)
                 ev.Allowed = false;
         }
