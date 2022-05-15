@@ -34,6 +34,7 @@ namespace FunnyGunsRecoded
         {
             if (Plugin.isEngaged)
             {
+                Plugin.HowManyDeathSinceLastAssault++;
                 ev.Target.Inventory.UserInventory.Items.Clear();
                 ev.Target.Ammo12Gauge = 0;
                 ev.Target.Ammo44Cal = 0;

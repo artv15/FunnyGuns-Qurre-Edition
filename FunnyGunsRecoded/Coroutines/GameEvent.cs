@@ -77,7 +77,7 @@ namespace FunnyGunsRecoded.Coroutines
                         pl.AddItem(ItemType.Medkit);
                         pl.AddItem(ItemType.Medkit);
                         pl.AddItem(ItemType.Medkit);
-                        pl.AddItem(ItemType.KeycardNTFLieutenant);
+                        pl.AddItem(ItemType.KeycardNTFCommander);
                         pl.AddItem(ItemType.ArmorCombat);
                         pl.AddItem(ItemType.GunE11SR);
                         MTFTickets -= 1;
@@ -92,7 +92,7 @@ namespace FunnyGunsRecoded.Coroutines
                         pl.AddItem(ItemType.Medkit);
                         pl.AddItem(ItemType.Medkit);
                         pl.AddItem(ItemType.Medkit);
-                        pl.AddItem(ItemType.KeycardNTFLieutenant);
+                        pl.AddItem(ItemType.KeycardNTFCommander);
                         pl.AddItem(ItemType.ArmorCombat);
                         pl.AddItem(ItemType.GunE11SR);
                         MTFTickets -= 1;
@@ -229,7 +229,7 @@ namespace FunnyGunsRecoded.Coroutines
 
                         foreach (var pl in Qurre.API.Player.List)
                         {
-                            pl.Broadcast($"<color=green>Ивент окончен.</color> Победа за {(ci == 0 ? "<color=blue>MTF</color>" : "<color=green>Хаосом</color>")}.", 10, true);
+                            pl.Broadcast($"<color=green>Ивент окончен.</color> Победа за {(ci == 0 ? "<color=blue>MTF</color>" : "<color=green>Хаосом</color>")}.", 10, true); //usually, rounds restarts for somewhat reason. but who cares?
                         }
                         Qurre.API.Controllers.Cassie.Send(".g4 .g4 .g4", false, false, true);
                         var ev = new Events();
@@ -250,7 +250,7 @@ namespace FunnyGunsRecoded.Coroutines
                     {
                         if (pl.Zone == Qurre.API.Objects.ZoneType.Light)
                         {
-                            pl.Damage(10f, PlayerStatsSystem.DeathTranslations.Unknown);
+                            pl.Damage(10f, "Зона была отсечена.");
                         }
                     }
                 }
@@ -260,7 +260,7 @@ namespace FunnyGunsRecoded.Coroutines
                     {
                         if (pl.Zone == Qurre.API.Objects.ZoneType.Heavy)
                         {
-                            pl.Damage(10f, PlayerStatsSystem.DeathTranslations.Unknown);
+                            pl.Damage(10f, "Зона была отсечена.");
                         }
                     }
                 }
@@ -280,8 +280,9 @@ namespace FunnyGunsRecoded.Coroutines
                     spectators++;
                 }
             }
-            if (((!(plrsAlive <= spectators) && !(UnityEngine.Random.Range(0, 11) <= 2)) || (spectators > 8)) && Plugin.AssaultWasStaredHowManyTimes < 1)
+            if (!(UnityEngine.Random.Range(0, 11) < Plugin.HowManyDeathSinceLastAssault) && !(Plugin.AssaultWasStaredHowManyTimes < 1))
             {
+                
                 while (true)
                 {
                     try
@@ -316,8 +317,9 @@ namespace FunnyGunsRecoded.Coroutines
             }
             else
             {
+                Plugin.HowManyDeathSinceLastAssault = 0; //Resetting deaths...
                 Plugin.AssaultWasStaredHowManyTimes = 1; //Hotfix, but it works, I guess...
-                Qurre.Log.Info("Called for mutator selection. Bypassed normal assignment, due to spectactors. Assigning tutorialAssault mutator.");
+                Qurre.Log.Info($"Called for mutator selection. Bypassed normal assignment, due to killAmount. Funfact: chance of this bypass was {Plugin.HowManyDeathSinceLastAssault * 10}%. Assigning tutorialAssault mutator.");
                 var mut = new Classes.Mutator("tutorialAssault", "<color=#07f773>Штурм туториалов (Подготовка)</color>", () =>
                 {
                     Timing.CallDelayed(1f, () => Plugin.SecondsBeforeNextStage = 129); //This is really specific!

@@ -19,7 +19,7 @@ namespace FunnyGunsRecoded
 #else
             + " (Release Edition)";
 #endif
-        public override System.Version Version { get; } = new System.Version(0, 7, 1, 5); /* <- plugin version(optional) */
+        public override System.Version Version { get; } = new System.Version(0, 7, 1, 6); /* <- plugin version(optional) */
         public Config CustomConfig { get; private set; } /* <- creating a new config class */
 
 #if DEBUG
@@ -31,6 +31,11 @@ namespace FunnyGunsRecoded
         #endregion
 
         #region globals
+        /// <summary>
+        /// Amount of deaths before Tutorial Assault. Used to calculate chance of Assault.
+        /// </summary>
+        public static int HowManyDeathSinceLastAssault = 0;
+        
         /// <summary>
         /// Amount of Chaos Agents, assigned by HUD Coroutine
         /// </summary>
@@ -158,35 +163,6 @@ namespace FunnyGunsRecoded
                         isOutdated = false;
                         Qurre.Log.Custom($"Your copy of plugin is up to date!", "FunnyGuns updater", ConsoleColor.Green);
                     }
-                    /*if (this.Version.Major < verRemote.major)
-                    {
-                        Qurre.Log.Error($"WARNING! Your version of FunnyGuns is one major version behind! Please, UPDATE THE PLUGIN FOR GOD'S SAKE!\nYour version: {this.Version.Major}.{this.Version.Minor}.{this.Version.Build}.{this.Version.Revision}; " +
-                            $"Remote version: {verRemote.major}.{verRemote.minor}.{verRemote.patch}.{verRemote.revision}");
-                    }
-                    else if (this.Version.Minor < verRemote.minor)
-                    {
-                        Qurre.Log.Warn($"Hey! Your version of FunnyGuns is one minor version behind! Update the plugin if you want to!\nYour version: {this.Version.Major}.{this.Version.Minor}.{this.Version.Build}.{this.Version.Revision}; " +
-                            $"Remote version: {verRemote.major}.{verRemote.minor}.{verRemote.patch}.{verRemote.revision}");
-                    }
-                    else if (this.Version.Build < verRemote.patch)
-                    {
-                        Qurre.Log.Info($"Hey! Your version of FunnyGuns is one patch/build version behind! There is no need to update the plugin right away, however, I recommend to do so.\nYour version: {this.Version.Major}.{this.Version.Minor}.{this.Version.Build}.{this.Version.Revision}; " +
-                            $"Remote version: {verRemote.major}.{verRemote.minor}.{verRemote.patch}.{verRemote.revision}");
-                    }
-                    else if (this.Version.Revision < verRemote.revision)
-                    {
-                        Qurre.Log.Info($"Psst! Your version of FunnyGuns is one revision version behind! Update if you want so!\nYour version: {this.Version.Major}.{this.Version.Minor}.{this.Version.Build}.{this.Version.Revision}; " +
-                            $"Remote version: {verRemote.major}.{verRemote.minor}.{verRemote.patch}.{verRemote.revision}");
-                    }
-                    else if (Plugin.IsDebugEnabled)
-                    {
-                        Qurre.Log.Info("This is a debug build. It will not be updated nor the version will be checked!");
-                    }
-                    else
-                    {
-                        isOutdated = false;
-                        Qurre.Log.Info("FunnyGuns is up to date!");
-                    }*/
                     if (isOutdated)
                     {
                         Qurre.Log.Custom("Autoupdate started!", "FunnyGuns updater", ConsoleColor.DarkGreen);
@@ -200,7 +176,6 @@ namespace FunnyGunsRecoded
                         {
                             Qurre.Log.Warn($"<color=darkred>Autoupdate failed! Error: {ex.Message}. Try using fg_forceupdate</color>");
                         }
-                        //Qurre.Log.Info($"version (remote said): {verRemote.major}.{verRemote.minor}.{verRemote.patch}.{verRemote.revision}");
                     }
                 }
             }

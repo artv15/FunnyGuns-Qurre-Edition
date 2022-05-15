@@ -35,6 +35,8 @@ namespace FunnyGunsRecoded.Commands
                                 if (Qurre.API.Round.Started && !Qurre.API.Controllers.Alpha.Detonated)
                                 {
                                     Plugin.isEngaged = true;
+                                    Plugin.HowManyDeathSinceLastAssault = 0;
+                                    Plugin.AssaultWasStaredHowManyTimes = 0;
                                     Timing.RunCoroutine(Coroutines.GameEvent.gameController(), "gameController");
                                     Timing.RunCoroutine(Coroutines.PlayerHUD.hudCoroutine(), "playerHUD");
 

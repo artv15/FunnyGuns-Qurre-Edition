@@ -17,7 +17,7 @@ namespace FunnyGunsRecoded.Commands
 
         public string[] Aliases => null;
 
-        public string Description => "Forcibly update plugin to the latest version";
+        public string Description => "Forcibly update plugin to the latest version (if autoupdate breaks for somewhat reason)";
 
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
@@ -45,8 +45,8 @@ namespace FunnyGunsRecoded.Commands
 
         void wc_DownloadComplete(object sender, AsyncCompletedEventArgs e)
         {
-            Qurre.Log.Info("Successfully updated plugin to current version! Server restart will commence in T-10 seconds!");
-            Timing.CallDelayed(10f, () => Qurre.API.Server.Restart());
+            Qurre.Log.Info("Successfully updated plugin to current version! Server restart will commence in T-5 seconds!");
+            Timing.CallDelayed(5f, () => Qurre.API.Server.Restart());
         }
     }
 }
