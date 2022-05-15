@@ -19,9 +19,10 @@ namespace FunnyGunsRecoded
 #else
             + " (Release Edition)";
 #endif
-        public override System.Version Version { get; } = new System.Version(0, 7, 1, 6); /* <- plugin version(optional) */
+        public override System.Version Version { get; } = new System.Version(0, 7, 2, 0); /* <- plugin version(optional) */
         public Config CustomConfig { get; private set; } /* <- creating a new config class */
 
+        public static bool debugUpdateWarning { get; set; } = false;
 #if DEBUG
         public static bool IsDebugEnabled = true;
 #else
@@ -142,46 +143,53 @@ namespace FunnyGunsRecoded
 
         void checkVersion()
         {
-            try
+            if (!Plugin.IsDebugEnabled)
             {
-                using (WebClient wc = new WebClient())
+                try
                 {
-                    string JSON_raw = wc.DownloadString("https://treesholdapi.ml/FunnyGuns/version.php");
-                    version verRemote = JsonSerializer.Deserialize<version>(JSON_raw);
-                    bool isOutdated = true;
-                    Version remt = new Version(verRemote.major, verRemote.minor, verRemote.patch, verRemote.revision);
-                    int local, remote;
-                    local = this.Version.Major * 1000 + this.Version.Minor * 100 + this.Version.Build * 10 + this.Version.Revision;
-                    remote = remt.Major * 1000 + remt.Minor * 100 + remt.Build * 10 + remt.Revision;
-                    Qurre.Log.Custom($"Checked for versions, remote said he has {remote}, i think we have {local}.");
-                    if (local < remote)
+                    using (WebClient wc = new WebClient())
                     {
-                        Qurre.Log.Custom($"Plugin is oudated! Your version: {this.Version.Major}.{this.Version.Minor}.{this.Version.Build}.{this.Version.Revision}, Remote has {remt.Major}.{remt.Minor}.{remt.Build}.{remt.Revision}. Trying to autoupdate!", "FunnyGuns updater", ConsoleColor.DarkRed);
-                    }
-                    else
-                    {
-                        isOutdated = false;
-                        Qurre.Log.Custom($"Your copy of plugin is up to date!", "FunnyGuns updater", ConsoleColor.Green);
-                    }
-                    if (isOutdated)
-                    {
-                        Qurre.Log.Custom("Autoupdate started!", "FunnyGuns updater", ConsoleColor.DarkGreen);
-                        try
+                        string JSON_raw = wc.DownloadString("https://treesholdapi.ml/FunnyGuns/version.php");
+                        version verRemote = JsonSerializer.Deserialize<version>(JSON_raw);
+                        bool isOutdated = true;
+                        Version remt = new Version(verRemote.major, verRemote.minor, verRemote.patch, verRemote.revision);
+                        int local, remote;
+                        local = this.Version.Major * 1000 + this.Version.Minor * 100 + this.Version.Build * 10 + this.Version.Revision;
+                        remote = remt.Major * 1000 + remt.Minor * 100 + remt.Build * 10 + remt.Revision;
+                        Qurre.Log.Custom($"Checked for versions, remote said he has {remote}, i think we have {local}.");
+                        if (local < remote)
                         {
-                            wc.DownloadProgressChanged += wc_DownloadProgressChanged;
-                            wc.DownloadFileCompleted += wc_DownloadComplete;
-                            wc.DownloadFileAsync(new Uri("https://treesholdapi.ml/FunnyGuns/FunnyGunsRecoded.dll"), Qurre.PluginManager.PluginsDirectory + "/FunnyGunsRecoded.dll");
+                            Qurre.Log.Custom($"Plugin is oudated! Your version: {this.Version.Major}.{this.Version.Minor}.{this.Version.Build}.{this.Version.Revision}, Remote has {remt.Major}.{remt.Minor}.{remt.Build}.{remt.Revision}. Trying to autoupdate!", "FunnyGuns updater", ConsoleColor.DarkRed);
                         }
-                        catch (Exception ex)
+                        else
                         {
-                            Qurre.Log.Warn($"<color=darkred>Autoupdate failed! Error: {ex.Message}. Try using fg_forceupdate</color>");
+                            isOutdated = false;
+                            Qurre.Log.Custom($"Your copy of plugin is up to date!", "FunnyGuns updater", ConsoleColor.Green);
+                        }
+                        if (isOutdated)
+                        {
+                            Qurre.Log.Custom("Autoupdate started!", "FunnyGuns updater", ConsoleColor.DarkGreen);
+                            try
+                            {
+                                wc.DownloadProgressChanged += wc_DownloadProgressChanged;
+                                wc.DownloadFileCompleted += wc_DownloadComplete;
+                                wc.DownloadFileAsync(new Uri("https://treesholdapi.ml/FunnyGuns/FunnyGunsRecoded.dll"), Qurre.PluginManager.PluginsDirectory + "/FunnyGunsRecoded.dll");
+                            }
+                            catch (Exception ex)
+                            {
+                                Qurre.Log.Warn($"<color=darkred>Autoupdate failed! Error: {ex.Message}. Try using fg_forceupdate</color>");
+                            }
                         }
                     }
                 }
+                catch (Exception ex)
+                {
+                    Qurre.Log.Warn($"<color=darkred>Failed to check for updates! There seems to be an issue with the remote! Error: {ex.Message}</color>");
+                }
             }
-            catch (Exception ex)
+            else
             {
-                Qurre.Log.Warn($"<color=darkred>Failed to check for updates! There seems to be an issue with the remote! Error: {ex.Message}</color>");
+                Qurre.Log.Custom($"AutoUpdating is disabled (this is a debug build!). To force an update, use fg_forceupdate.", "FunnyGuns updater", ConsoleColor.Magenta);
             }
         }
 

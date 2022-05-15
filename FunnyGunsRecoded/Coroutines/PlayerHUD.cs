@@ -33,7 +33,7 @@ namespace FunnyGunsRecoded.Coroutines
                 {
                     foreach (var pl in Qurre.API.Player.List)
                     {
-                        pl.ShowHint("\n\n\n\n\n\n\n\n\n\n\n\n<color=red>Внезапная смерть!</color>\n<color=yellow>Все живые игроки будут терять по 2 хп в секунду. Уничтожьте вражескую команду или останьтесь последней в живых.</color>", 1f);
+                        pl.ShowHint("\n\n\n\n\n\n\n\n\n\n\n\n<color=red>Внезапная смерть!</color>\n<color=yellow>Все живые игроки будут терять по 4 хп в секунду. Уничтожьте вражескую команду или останьтесь последней в живых.</color>", 1f);
                     }
                 }
                 else

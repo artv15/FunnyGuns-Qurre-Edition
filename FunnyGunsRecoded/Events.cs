@@ -1,4 +1,5 @@
 ﻿using MEC;
+using System.Linq;
 
 namespace FunnyGunsRecoded
 {
@@ -121,7 +122,7 @@ namespace FunnyGunsRecoded
 
         public void StopAllEventShit()
         {
-            foreach (var mut in Plugin.engagedMutators)
+            foreach (var mut in Plugin.engagedMutators.ToList())
             {
                 mut.disengaged.Invoke();
                 Plugin.engagedMutators.Remove(mut);
@@ -135,7 +136,7 @@ namespace FunnyGunsRecoded
             Timing.KillCoroutines("gameController");
             Timing.KillCoroutines("playerHUD");
             Timing.KillCoroutines("zoneDecont");
-            foreach (var lift in Qurre.API.Map.Lifts)
+            foreach (var lift in Qurre.API.Map.Lifts.ToList())
             {
                 if (lift.Type == Qurre.API.Objects.LiftType.ElBRight || lift.Type == Qurre.API.Objects.LiftType.ElBLeft ||
                     lift.Type == Qurre.API.Objects.LiftType.ElALeft || lift.Type == Qurre.API.Objects.LiftType.ElARight)
@@ -143,7 +144,7 @@ namespace FunnyGunsRecoded
                     lift.Locked = false;
                 }
             }
-            foreach (var door in Qurre.API.Map.Doors)
+            foreach (var door in Qurre.API.Map.Doors.ToList())
             {
                 if (door.Type == Qurre.API.Objects.DoorType.HCZ_Door)
                 {
@@ -151,7 +152,7 @@ namespace FunnyGunsRecoded
                     door.Locked = false;
                 }
             }
-            foreach (var elev in Qurre.API.Map.Lifts)
+            foreach (var elev in Qurre.API.Map.Lifts.ToList())
             {
                 if (elev.Type == Qurre.API.Objects.LiftType.GateA || elev.Type == Qurre.API.Objects.LiftType.GateB)
                 {

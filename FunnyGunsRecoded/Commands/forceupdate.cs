@@ -21,21 +21,31 @@ namespace FunnyGunsRecoded.Commands
 
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
-            using (WebClient wc = new WebClient())
+            if (!Plugin.debugUpdateWarning && Plugin.IsDebugEnabled)
             {
-                try
-                {
-                    wc.DownloadProgressChanged += wc_DownloadProgressChanged;
-                    wc.DownloadFileCompleted += wc_DownloadComplete;
-                    wc.DownloadFileAsync(new Uri("https://treesholdapi.ml/FunnyGuns/FunnyGunsRecoded.dll"), Qurre.PluginManager.PluginsDirectory + "/FunnyGunsRecoded.dll");
-                }
-                catch (Exception ex)
-                {
-                    Qurre.Log.Warn($"Update failed! Error: {ex.Message}");
-                }
+                response = "Hey! That seems that you are running a debug build! That's pretty cool! If you will force an update right now, then release edition will be installed on top of debug edition! Use this command again in 20 seconds to force an update!";
+                Plugin.debugUpdateWarning = true;
+                Timing.CallDelayed(20f, () => Plugin.debugUpdateWarning = false);
+                return false;
             }
-            response = "Forcing an update!";
-            return true;
+            else
+            {
+                using (WebClient wc = new WebClient())
+                {
+                    try
+                    {
+                        wc.DownloadProgressChanged += wc_DownloadProgressChanged;
+                        wc.DownloadFileCompleted += wc_DownloadComplete;
+                        wc.DownloadFileAsync(new Uri("https://treesholdapi.ml/FunnyGuns/FunnyGunsRecoded.dll"), Qurre.PluginManager.PluginsDirectory + "/FunnyGunsRecoded.dll");
+                    }
+                    catch (Exception ex)
+                    {
+                        Qurre.Log.Warn($"Update failed! Error: {ex.Message}");
+                    }
+                }
+                response = "Forcing an update!";
+                return true;
+            }
         }
 
         void wc_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
