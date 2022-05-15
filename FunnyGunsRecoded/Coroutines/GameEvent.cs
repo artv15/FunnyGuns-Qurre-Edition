@@ -229,7 +229,7 @@ namespace FunnyGunsRecoded.Coroutines
 
                         foreach (var pl in Qurre.API.Player.List)
                         {
-                            pl.Broadcast($"<color=green>Ивент окончен.</color> Победа за {(ci == 0 ? "<color=blue>MTF</color>" : "<color=green>Хаосом</color>")}.", 10, true); //usually, rounds restarts for somewhat reason. but who cares?
+                            pl.Broadcast($"{Plugin.selectedLocale.EventEnd} {(ci == 0 ? Plugin.selectedLocale.EventEnd_MTF_WIN : Plugin.selectedLocale.EventEnd_CI_WIN)}.", 10, true); //usually, rounds restarts for somewhat reason. but who cares?
                         }
                         Qurre.API.Controllers.Cassie.Send(".g4 .g4 .g4", false, false, true);
                         var ev = new Events();
@@ -250,7 +250,7 @@ namespace FunnyGunsRecoded.Coroutines
                     {
                         if (pl.Zone == Qurre.API.Objects.ZoneType.Light)
                         {
-                            pl.Damage(10f, "Зона была отсечена.");
+                            pl.Damage(10f, Plugin.selectedLocale.LocdownDeathReason);
                         }
                     }
                 }
@@ -260,7 +260,7 @@ namespace FunnyGunsRecoded.Coroutines
                     {
                         if (pl.Zone == Qurre.API.Objects.ZoneType.Heavy)
                         {
-                            pl.Damage(10f, "Зона была отсечена.");
+                            pl.Damage(10f, Plugin.selectedLocale.LocdownDeathReason);
                         }
                     }
                 }
@@ -319,8 +319,8 @@ namespace FunnyGunsRecoded.Coroutines
             {
                 Plugin.HowManyDeathSinceLastAssault = 0; //Resetting deaths...
                 Plugin.AssaultWasStaredHowManyTimes = 1; //Hotfix, but it works, I guess...
-                Qurre.Log.Info($"Called for mutator selection. Bypassed normal assignment, due to killAmount. Funfact: chance of this bypass was {Plugin.HowManyDeathSinceLastAssault * 10}%. Assigning tutorialAssault mutator.");
-                var mut = new Classes.Mutator("tutorialAssault", "<color=#07f773>Штурм туториалов (Подготовка)</color>", () =>
+                Qurre.Log.Info($"Called for mutator selection. Bypassed normal assignment, due to killAmount. Assigning tutorialAssault mutator.");
+                var mut = new Classes.Mutator("tutorialAssault", $"<color=#07f773>{Plugin.selectedLocale.TutorialAssaultBaseName} ({Plugin.selectedLocale.TutorialAssaultPrep})</color>", () =>
                 {
                     Timing.CallDelayed(1f, () => Plugin.SecondsBeforeNextStage = 129); //This is really specific!
                     Timing.RunCoroutine(Coroutines.Mutators.tutorialAssault_engaged(), "TutorialAssault");

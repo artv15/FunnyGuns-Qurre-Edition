@@ -173,7 +173,7 @@ namespace FunnyGunsRecoded
             StopAllEventShit();
             Plugin.loadedMutators.Clear();
 
-            Plugin.loadedMutators.Add(new Classes.Mutator("passiveRegen", "<color=green>Пассивная регенерация</color>", () =>
+            Plugin.loadedMutators.Add(new Classes.Mutator("passiveRegen", Plugin.getDisplayByCommandName("passiveRegen"), () =>
             {
                 Timing.RunCoroutine(Coroutines.Mutators.passiveRegen_engaged(), "passiveRegen");
             },
@@ -184,7 +184,7 @@ namespace FunnyGunsRecoded
             (ev) => { },
             () => { }));
 
-            Plugin.loadedMutators.Add(new Classes.Mutator("fogOfWar", "<color=orange>Густой туман</color>", () =>
+            Plugin.loadedMutators.Add(new Classes.Mutator("fogOfWar", Plugin.getDisplayByCommandName("fogOfWar"), () =>
             {
                 foreach (var pl in Qurre.API.Player.List)
                 {
@@ -205,7 +205,7 @@ namespace FunnyGunsRecoded
 
             }));
 
-            Plugin.loadedMutators.Add(new Classes.Mutator("lightsOut", "<color=orange>Нет света</color>", () =>
+            Plugin.loadedMutators.Add(new Classes.Mutator("lightsOut", Plugin.getDisplayByCommandName("lightsOut"), () =>
             {
                 Qurre.API.Controllers.Lights.TurnOff(99999f);
             }, () =>
@@ -219,7 +219,7 @@ namespace FunnyGunsRecoded
 
             }));
 
-            Plugin.loadedMutators.Add(new Classes.Mutator("speed++", "<color=green>Скорость передвижения увеличена!</color>", () =>
+            Plugin.loadedMutators.Add(new Classes.Mutator("speed++", Plugin.getDisplayByCommandName("speed++"), () =>
             {
                 foreach (var pl in Qurre.API.Player.List)
                 {
@@ -240,7 +240,7 @@ namespace FunnyGunsRecoded
 
             }));
 
-            Plugin.loadedMutators.Add(new Classes.Mutator("noTeslaGates", "<color=orange>Тесла ворота отключены</color>", () =>
+            Plugin.loadedMutators.Add(new Classes.Mutator("noTeslaGates", Plugin.getDisplayByCommandName("noTeslaGates"), () =>
             {
                 foreach (var tesla in Qurre.API.Map.Teslas)
                 {
@@ -276,7 +276,7 @@ namespace FunnyGunsRecoded
 
             }));*/
 
-            Plugin.loadedMutators.Add(new Classes.Mutator("legalWH", "<color=green>Рентгеновское зрение</color>", () =>
+            Plugin.loadedMutators.Add(new Classes.Mutator("legalWH", Plugin.getDisplayByCommandName("legalWH"), () =>
             {
                 foreach (var pl in Qurre.API.Player.List)
                 {
@@ -297,7 +297,7 @@ namespace FunnyGunsRecoded
 
             }));
 
-            Plugin.loadedMutators.Add(new Classes.Mutator("bleeding", "<color=red>Кровотечение от огнестрельных ранений</color>", () =>
+            Plugin.loadedMutators.Add(new Classes.Mutator("bleeding", Plugin.getDisplayByCommandName("bleeding"), () =>
             {
                 //we do nothing, mutator exists just to be checked for.
             }, () =>
@@ -311,7 +311,7 @@ namespace FunnyGunsRecoded
 
             }));
 
-            Plugin.loadedMutators.Add(new Classes.Mutator("badBullets", "<color=red>Некоторые патроны - холостые</color>", () =>
+            Plugin.loadedMutators.Add(new Classes.Mutator("badBullets", Plugin.getDisplayByCommandName("badBullets"), () =>
             {
                 //we do nothing, mutator exists just to be checked for.
             }, () =>

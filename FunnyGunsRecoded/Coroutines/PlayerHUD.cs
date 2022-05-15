@@ -21,40 +21,19 @@ namespace FunnyGunsRecoded.Coroutines
                 {
                     foreach (var pl in Qurre.API.Player.List)
                     {
-                        pl.ShowHint("\n\n\n\n\n\n\n\n\n\n<color=yellow>Стадия подготовки. До окончания подготовки осталось </color><color=green>" + Plugin.SecondsBeforeNextStage.ToString() + "</color> секунд(ы)" + "\n" +
-                            "<color=green>Суть ивента</color>: Ваша задача истребить вражескую команду. Во время игры, будут добавляться мутаторы. Они меняют некоторые правила игры.\n" +
-                            "<color=green>Во время подготовки лифты не могут быть вызваны.</color>\n" +
-                            "<color=red>Специально для людей, которые будут говорить, что это говно-ивент. Если вы уж это и делаете, то говорите хотя-бы почему.</color>\n" +
-                            //"<color=red>Если вы хотите узнать больше(что вряд-ли), то .fg_govnoivent в консоль (~)</color>\n" +
-                            "<color=blue>Если вы хотите узнать имена разработчиков, то используйте</color> <color=red>.fg_info</color><color=blue> в консоли (~)</color>", 1f);
+                        pl.ShowHint("\n\n\n\n\n\n\n\n\n\n" + Plugin.selectedLocale.PrepStage_HUD_START + Plugin.SecondsBeforeNextStage.ToString() + Plugin.selectedLocale.PrepStage_HUD_END, 1f);
                     }
                 }
                 else if (Plugin.Stage == 5) 
                 {
                     foreach (var pl in Qurre.API.Player.List)
                     {
-                        pl.ShowHint("\n\n\n\n\n\n\n\n\n\n\n\n<color=red>Внезапная смерть!</color>\n<color=yellow>Все живые игроки будут терять по 4 хп в секунду. Уничтожьте вражескую команду или останьтесь последней в живых.</color>", 1f);
+                        pl.ShowHint("\n\n\n\n\n\n\n\n\n\n\n\n" + Plugin.selectedLocale.InstantDeathHUD, 1f);
                     }
                 }
                 else
                 {
                     //Color stuff
-                    string color = "#fc2d2d";
-                    switch (Plugin.Stage)
-                    {
-                        case 1:
-                            color = "#42fc2d";
-                            break;
-                        case 2:
-                            color = "#bafc2d";
-                            break;
-                        case 3:
-                            color = "#fcbe2d";
-                            break;
-                        case 4:
-                            color = "#fc2d2d";
-                            break;
-                    }
 
                     // This is not an optimal solution to this, but fine
                     // Edit: this aged quickly
@@ -81,10 +60,11 @@ namespace FunnyGunsRecoded.Coroutines
                     // Plz don't beat me for that
                     // And also, why doesn't qurre have Qurre.API.Objects.Player.isNTF or .isCI field?
 
-                    string str = $"\n\n\n\n\n\n\n\n\n\n\n\nЖивы: " + Plugin.NTF.ToString() + "<color=blue>Моговцев </color>, " + Plugin.CI.ToString() + " <color=green>Хаоситов </color>\n<color=orange>Текущая стадия: </color><color=" + color + ">" + Plugin.Stage.ToString() + "</color>. <color=orange>До следующей стадии </color><color=green>" + (Plugin.isStageFrozen ? "<color=red>DEV Override: Stage frozen.</color>" : Plugin.SecondsBeforeNextStage.ToString()) + "</color> секунд(ы)";
+                    string str = $"\n\n\n\n\n\n\n\n\n\n\n\n{Plugin.selectedLocale.AlivePlayers_HUD_ALIVE} {Plugin.NTF} <color=blue>{Plugin.selectedLocale.AlivePlayers_HUD_MTF}</color>, {Plugin.CI} <color=green>{Plugin.selectedLocale.AlivePlayers_HUD_CI}</color>.\n" +
+                        $"<color=orange>{Plugin.selectedLocale.Stage_HUD_CURRENTSTAGE}</color><color=" + Plugin.getStageColor() + ">" + Plugin.Stage.ToString() + $"</color>. <color=orange>{Plugin.selectedLocale.Stage_HUD_TIMEBEFORENEXTSTAGE}</color><color=green>" + (Plugin.isStageFrozen ? "<color=red>DEV Override: Stage frozen.</color>" : Plugin.SecondsBeforeNextStage.ToString()) + $"</color> {Plugin.selectedLocale.Stage_HUD_SECONDSTRANSLATION}";
                     if (Plugin.engagedMutators.Count > 0)
                     {
-                        str += "\nТекущие мутаторы: ";
+                        str += "\n" + Plugin.selectedLocale.CurrentMutatorsText_HUD;
                         int i = 1;
                         foreach (var m in Plugin.engagedMutators)
                         {
@@ -103,31 +83,12 @@ namespace FunnyGunsRecoded.Coroutines
                     // Hud implementation
                     if (Plugin.Stage == 2)
                     {
-                        var colorAlert = "red";
-                        switch (Plugin.SecondsBeforeNextStage % 2)
-                        {
-                            case 0:
-                                colorAlert = "red";
-                                break;
-                            case 1:
-                                colorAlert = "white";
-                                break;
-                        }
-                        str += "\n<color=" + colorAlert + ">Закрытие лайт зоны в начале следующей стадии!</color>";
+
+                        str += "\n<color=" + Plugin.getWarnColor() + ">" + Plugin.selectedLocale.LCZLockdown_HUD + "</color>";
                     }
                     if (Plugin.Stage == 3)
                     {
-                        var colorAlert = "red";
-                        switch (Plugin.SecondsBeforeNextStage % 2)
-                        {
-                            case 0:
-                                colorAlert = "red";
-                                break;
-                            case 1:
-                                colorAlert = "white";
-                                break;
-                        }
-                        str += "\n<color=" + colorAlert + ">Закрытие хард зоны в начале следующей стадии!</color>";
+                        str += "\n<color=" + Plugin.getWarnColor() + ">" + Plugin.selectedLocale.HCZLockdown_HUD + "</color>";
                     }
 
                     foreach (var pl in Qurre.API.Player.List)

@@ -27,7 +27,7 @@ namespace FunnyGunsRecoded.Coroutines
             {
                 if (mut.commandName == "tutorialAssault")
                 {
-                    mut.displayName = "<color=#07f773>Штурм туториалов (Подготовка)</color>";
+                    mut.displayName = $"<color=#07f773>{Plugin.selectedLocale.TutorialAssaultBaseName} ({Plugin.selectedLocale.TutorialAssaultPrep})</color>";
                     break;
                 }
             }
@@ -36,7 +36,7 @@ namespace FunnyGunsRecoded.Coroutines
             {
                 if (mut.commandName == "tutorialAssault")
                 {
-                    mut.displayName = "<color=#07f773>Штурм туториалов (Антисипация)</color>";
+                    mut.displayName = $"<color=#07f773>{Plugin.selectedLocale.TutorialAssaultBaseName} ({Plugin.selectedLocale.TutorialAssaultAnticipation})</color>";
                 }
             }
             yield return Timing.WaitForSeconds(29f);
@@ -45,7 +45,7 @@ namespace FunnyGunsRecoded.Coroutines
             {
                 if (mut.commandName == "tutorialAssault")
                 {
-                    mut.displayName = "<color=#07f773>Штурм туториалов (</color><color=red>В прогрессе</color><color=#07f773>)</color>";
+                    mut.displayName = $"<color=#07f773>{Plugin.selectedLocale.TutorialAssaultBaseName} (</color><color=red>{Plugin.selectedLocale.TutorialAssaultAssault}</color><color=#07f773>)</color>";
                 }
             }
             while (Plugin.SecondsBeforeNextStage >= 20)
@@ -76,7 +76,7 @@ namespace FunnyGunsRecoded.Coroutines
             {
                 if (mut.commandName == "tutorialAssault")
                 {
-                    mut.displayName = "<color=#07f773>Штурм туториалов (Стихание)</color>";
+                    mut.displayName = $"<color=#07f773>{Plugin.selectedLocale.TutorialAssaultBaseName} ({Plugin.selectedLocale.TutorialAssaultFade})</color>";
                 }
             }
             while (Plugin.SecondsBeforeNextStage > 1)
@@ -88,7 +88,7 @@ namespace FunnyGunsRecoded.Coroutines
                 if (mut.commandName == "tutorialAssault")
                 {
                     mut.disengaged.Invoke();
-                    mut.displayName = "<color=#07f773>Штурм туториалов (Подготовка)</color>"; // For somewhat reason, if we change the mutator in engaged mutators (the reason is pointers), it is changed in loaded mutators. Maybe because we just point to the same place in memory. Maybe not.
+                    mut.displayName = $"<color=#07f773>{Plugin.selectedLocale.TutorialAssaultBaseName} ({Plugin.selectedLocale.TutorialAssaultPrep})</color>"; ; // For somewhat reason, if we change the mutator in engaged mutators (the reason is pointers), it is changed in loaded mutators. Maybe because we just point to the same place in memory. Maybe not.
                     Plugin.engagedMutators.Remove(mut);
                     yield break;
                 }

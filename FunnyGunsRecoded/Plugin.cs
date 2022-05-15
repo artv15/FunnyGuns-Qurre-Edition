@@ -33,6 +33,11 @@ namespace FunnyGunsRecoded
 
         #region globals
         /// <summary>
+        /// Selected locale. Managed by Classes.LocalisationManager
+        /// </summary>
+        public static Interfaces.ILocalisation selectedLocale;
+
+        /// <summary>
         /// Amount of deaths before Tutorial Assault. Used to calculate chance of Assault.
         /// </summary>
         public static int HowManyDeathSinceLastAssault = 0;
@@ -85,6 +90,11 @@ namespace FunnyGunsRecoded
         /// </summary>
         public static int SecondsBeforeNextStage = 0;
 
+        /// <summary>
+        /// Locale mutator names go here!
+        /// </summary>
+        public static Dictionary<string, string> MutatorLocaleDict = new Dictionary<string, string>();
+
         /*/// <summary>
         /// Used by damage++ mutator.
         /// </summary>
@@ -105,9 +115,10 @@ namespace FunnyGunsRecoded
         #region Enable/Disable
         public override void Enable()
         {
-            checkVersion();
             CustomConfig = new Config();
             CustomConfigs.Add(CustomConfig);
+            checkVersion();
+            Classes.LocalisationManager.InitLocalisation(CustomConfig.Locale);
             ev = new Events();
             Qurre.Events.Player.Dies += ev.playerDied;
             Qurre.Events.Player.RoleChange += ev.roleChanging;
@@ -141,9 +152,66 @@ namespace FunnyGunsRecoded
             public int revision;
         }
 
+        public static string getWarnColor()
+        {
+            var colorAlert = "red";
+            switch (Plugin.SecondsBeforeNextStage % 2)
+            {
+                case 0:
+                    colorAlert = "red";
+                    break;
+                case 1:
+                    colorAlert = "white";
+                    break;
+            }
+            return colorAlert;
+        }
+
+        public static string getStageColor()
+        {
+            string color = "#fc2d2d";
+            switch (Plugin.Stage)
+            {
+                case 1:
+                    color = "#42fc2d";
+                    break;
+                case 2:
+                    color = "#bafc2d";
+                    break;
+                case 3:
+                    color = "#fcbe2d";
+                    break;
+                case 4:
+                    color = "#fc2d2d";
+                    break;
+            }
+            return color;
+        }
+
+        public static string getDisplayByCommandName(string cmd_name)
+        {
+            try
+            {
+                if (Plugin.MutatorLocaleDict.ContainsKey(cmd_name))
+                {
+                    return Plugin.MutatorLocaleDict[cmd_name];
+                }
+                else
+                {
+                    Qurre.Log.Error($"Localisation for {cmd_name} not found!");
+                    return $"<color=red>[LOCALISATION NOT FOUND] COMMAND NAME:</color> {cmd_name}";
+                }
+            }
+            catch (Exception e)
+            {
+                Qurre.Log.Error($"An exception occured during mutator displayname defining. Error: {e.Message}");
+                return $"<color=red>[ERROR OCCURED DURING LOCALISATION INIT] COMMAND NAME:</color> {cmd_name}";
+            }
+        }
+
         void checkVersion()
         {
-            if (!Plugin.IsDebugEnabled)
+            if (!Plugin.IsDebugEnabled && CustomConfig.Autoupdates)
             {
                 try
                 {
@@ -187,9 +255,13 @@ namespace FunnyGunsRecoded
                     Qurre.Log.Warn($"<color=darkred>Failed to check for updates! There seems to be an issue with the remote! Error: {ex.Message}</color>");
                 }
             }
-            else
+            else if (Plugin.IsDebugEnabled)
             {
                 Qurre.Log.Custom($"AutoUpdating is disabled (this is a debug build!). To force an update, use fg_forceupdate.", "FunnyGuns updater", ConsoleColor.Magenta);
+            }
+            else
+            {
+                Qurre.Log.Custom($"AutoUpdating is disabled (configured). To update, use fg_forceupdate.", "FunnyGuns updater", ConsoleColor.Magenta);
             }
         }
 
