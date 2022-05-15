@@ -19,7 +19,7 @@ namespace FunnyGunsRecoded
 #else
             + " (Release Edition)";
 #endif
-        public override System.Version Version { get; } = new System.Version(0, 7, 1, 2); /* <- plugin version(optional) */
+        public override System.Version Version { get; } = new System.Version(0, 7, 1, 3); /* <- plugin version(optional) */
         public Config CustomConfig { get; private set; } /* <- creating a new config class */
 
 #if DEBUG
@@ -145,12 +145,16 @@ namespace FunnyGunsRecoded
                     version verRemote = JsonSerializer.Deserialize<version>(JSON_raw);
                     bool isOutdated = true;
                     Version remt = new Version(verRemote.major, verRemote.minor, verRemote.patch, verRemote.revision);
-                    if (this.Version < remt)
+                    int local, remote;
+                    local = this.Version.Major * 1000 + this.Version.Minor * 100 + this.Version.Build * 10 + this.Version.Minor;
+                    remote = remt.Major * 1000 + remt.Minor * 100 + remt.Build * 10 + remt.Revision;
+                    if (local < remote)
                     {
                         Qurre.Log.Info($"<color=darkred>Plugin is oudated! Your version: {this.Version.Major}.{this.Version.Minor}.{this.Version.Build}.{this.Version.Revision}, Remote has {remt.Major}.{remt.Minor}.{remt.Build}.{remt.Revision}. Trying to autoupdate!</color>");
                     }
                     else
                     {
+                        isOutdated = false;
                         Qurre.Log.Info($"<color=green>Your copy of plugin is up to date!</color>");
                     }
                     /*if (this.Version.Major < verRemote.major)
