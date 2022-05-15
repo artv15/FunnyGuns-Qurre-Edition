@@ -7,8 +7,8 @@ After downloading binary, drop it in %appdata%/Qurre/Plugins (or ~/.config/Qurre
 From now on, you can download version 0.7.1.4, it will auto-update to the latest one.
 
 # How to start the event? / Commands
-fg_event start - start the event (RA)
-fg_event stop - stop the event (RA)
+fg_event start - start the event (RA)/n
+fg_event stop - stop the event (RA)/n
 fg_forceupdate - forces an update (Server Console)
 
 # How does this plugin work (in a nutshell)
