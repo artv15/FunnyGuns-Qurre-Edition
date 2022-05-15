@@ -6,6 +6,11 @@ To install FunnyGuns, you need to download the binary first! It's located in the
 After downloading binary, drop it in %appdata%/Qurre/Plugins (or ~/.config/Qurre/Plugins) folder.
 From now on, you can download version 0.7.1.4, it will auto-update to the latest one.
 
+# How to start the event? / Commands
+fg_event start - start the event (RA)
+fg_event stop - stop the event (RA)
+fg_forceupdate - forces an update (Server Console)
+
 # How does this plugin work (in a nutshell)
 ## blah blah blah API for mutators
 This is basically an API for mutators. There is a class called mutator and two lists. One named
