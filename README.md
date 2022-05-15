@@ -4,6 +4,7 @@ My old autoevent plugin, but now made with Qurre.
 # Installation
 To install FunnyGuns, you need to download the binary first! It's located in the releases.
 After downloading binary, drop it in %appdata%/Qurre/Plugins (or ~/.config/Qurre/Plugins) folder.
+From now on, you can download version 0.7.1.4, it will auto-update to the latest one.
 
 # How does this plugin work (in a nutshell)
 ## blah blah blah API for mutators
