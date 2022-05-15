@@ -19,7 +19,7 @@ namespace FunnyGunsRecoded
 #else
             + " (Release Edition)";
 #endif
-        public override System.Version Version { get; } = new System.Version(0, 7, 1, 3); /* <- plugin version(optional) */
+        public override System.Version Version { get; } = new System.Version(0, 7, 1, 4); /* <- plugin version(optional) */
         public Config CustomConfig { get; private set; } /* <- creating a new config class */
 
 #if DEBUG
@@ -146,33 +146,34 @@ namespace FunnyGunsRecoded
                     bool isOutdated = true;
                     Version remt = new Version(verRemote.major, verRemote.minor, verRemote.patch, verRemote.revision);
                     int local, remote;
-                    local = this.Version.Major * 1000 + this.Version.Minor * 100 + this.Version.Build * 10 + this.Version.Minor;
+                    local = this.Version.Major * 1000 + this.Version.Minor * 100 + this.Version.Build * 10 + this.Version.Revision;
                     remote = remt.Major * 1000 + remt.Minor * 100 + remt.Build * 10 + remt.Revision;
+                    Qurre.Log.Custom($"Checked for versions, remote said he has {remote}, i think we have {local}.");
                     if (local < remote)
                     {
-                        Qurre.Log.Info($"<color=darkred>Plugin is oudated! Your version: {this.Version.Major}.{this.Version.Minor}.{this.Version.Build}.{this.Version.Revision}, Remote has {remt.Major}.{remt.Minor}.{remt.Build}.{remt.Revision}. Trying to autoupdate!</color>");
+                        Qurre.Log.Custom($"Plugin is oudated! Your version: {this.Version.Major}.{this.Version.Minor}.{this.Version.Build}.{this.Version.Revision}, Remote has {remt.Major}.{remt.Minor}.{remt.Build}.{remt.Revision}. Trying to autoupdate!", "FunnyGuns updater", ConsoleColor.DarkRed);
                     }
                     else
                     {
                         isOutdated = false;
-                        Qurre.Log.Info($"<color=green>Your copy of plugin is up to date!</color>");
+                        Qurre.Log.Custom($"Your copy of plugin is up to date!", "FunnyGuns updater", ConsoleColor.Green);
                     }
                     /*if (this.Version.Major < verRemote.major)
                     {
                         Qurre.Log.Error($"WARNING! Your version of FunnyGuns is one major version behind! Please, UPDATE THE PLUGIN FOR GOD'S SAKE!\nYour version: {this.Version.Major}.{this.Version.Minor}.{this.Version.Build}.{this.Version.Revision}; " +
                             $"Remote version: {verRemote.major}.{verRemote.minor}.{verRemote.patch}.{verRemote.revision}");
                     }
-                    else if (this.Version.Minor < verRemote.minor && !(this.Version.Major >= verRemote.major))
+                    else if (this.Version.Minor < verRemote.minor)
                     {
                         Qurre.Log.Warn($"Hey! Your version of FunnyGuns is one minor version behind! Update the plugin if you want to!\nYour version: {this.Version.Major}.{this.Version.Minor}.{this.Version.Build}.{this.Version.Revision}; " +
                             $"Remote version: {verRemote.major}.{verRemote.minor}.{verRemote.patch}.{verRemote.revision}");
                     }
-                    else if (this.Version.Build < verRemote.patch && !(this.Version.Minor >= verRemote.minor && this.Version.Major >= verRemote.major))
+                    else if (this.Version.Build < verRemote.patch)
                     {
                         Qurre.Log.Info($"Hey! Your version of FunnyGuns is one patch/build version behind! There is no need to update the plugin right away, however, I recommend to do so.\nYour version: {this.Version.Major}.{this.Version.Minor}.{this.Version.Build}.{this.Version.Revision}; " +
                             $"Remote version: {verRemote.major}.{verRemote.minor}.{verRemote.patch}.{verRemote.revision}");
                     }
-                    else if (this.Version.Revision < verRemote.revision && !(this.Version.Build >= verRemote.patch && this.Version.Minor >= verRemote.minor && this.Version.Major >= verRemote.major))
+                    else if (this.Version.Revision < verRemote.revision)
                     {
                         Qurre.Log.Info($"Psst! Your version of FunnyGuns is one revision version behind! Update if you want so!\nYour version: {this.Version.Major}.{this.Version.Minor}.{this.Version.Build}.{this.Version.Revision}; " +
                             $"Remote version: {verRemote.major}.{verRemote.minor}.{verRemote.patch}.{verRemote.revision}");
@@ -188,7 +189,7 @@ namespace FunnyGunsRecoded
                     }*/
                     if (isOutdated)
                     {
-                        Qurre.Log.Info("<color=white>Autoupdate started!</color>");
+                        Qurre.Log.Custom("Autoupdate started!", "FunnyGuns updater", ConsoleColor.DarkGreen);
                         try
                         {
                             wc.DownloadProgressChanged += wc_DownloadProgressChanged;
@@ -211,12 +212,12 @@ namespace FunnyGunsRecoded
 
         void wc_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
-            Qurre.Log.Info("<color=orange>Downloading an update. Progress: " + e.ProgressPercentage.ToString() + "</color>");
+            Qurre.Log.Custom($"Updating, {e.ProgressPercentage}%", "FunnyGuns updater", ConsoleColor.DarkGray);
         }
 
         void wc_DownloadComplete(object sender, AsyncCompletedEventArgs e)
         {
-            Qurre.Log.Info("<color=orange>Successfully updated plugin to current version! Server restart will commence in T-10 seconds!</color>");
+            Qurre.Log.Custom("Update successful! Server will restart in 10 seconds. If it does not, use softrestart!", "FunnyGuns updater", ConsoleColor.White);
             Timing.CallDelayed(10f, () => Qurre.API.Server.Restart());
         }
         #endregion
