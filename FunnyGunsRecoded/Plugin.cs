@@ -19,7 +19,7 @@ namespace FunnyGunsRecoded
 #else
             + " (Release Edition)";
 #endif
-        public override System.Version Version { get; } = new System.Version(0, 7, 1, 0); /* <- plugin version(optional) */
+        public override System.Version Version { get; } = new System.Version(0, 7, 1, 2); /* <- plugin version(optional) */
         public Config CustomConfig { get; private set; } /* <- creating a new config class */
 
 #if DEBUG
@@ -144,23 +144,31 @@ namespace FunnyGunsRecoded
                     string JSON_raw = wc.DownloadString("https://treesholdapi.ml/FunnyGuns/version.php");
                     version verRemote = JsonSerializer.Deserialize<version>(JSON_raw);
                     bool isOutdated = true;
-                    Plugin pl = new Plugin();
-                    if (this.Version.Major < verRemote.major)
+                    Version remt = new Version(verRemote.major, verRemote.minor, verRemote.patch, verRemote.revision);
+                    if (this.Version < remt)
+                    {
+                        Qurre.Log.Info($"<color=darkred>Plugin is oudated! Your version: {this.Version.Major}.{this.Version.Minor}.{this.Version.Build}.{this.Version.Revision}, Remote has {remt.Major}.{remt.Minor}.{remt.Build}.{remt.Revision}. Trying to autoupdate!</color>");
+                    }
+                    else
+                    {
+                        Qurre.Log.Info($"<color=green>Your copy of plugin is up to date!</color>");
+                    }
+                    /*if (this.Version.Major < verRemote.major)
                     {
                         Qurre.Log.Error($"WARNING! Your version of FunnyGuns is one major version behind! Please, UPDATE THE PLUGIN FOR GOD'S SAKE!\nYour version: {this.Version.Major}.{this.Version.Minor}.{this.Version.Build}.{this.Version.Revision}; " +
                             $"Remote version: {verRemote.major}.{verRemote.minor}.{verRemote.patch}.{verRemote.revision}");
                     }
-                    else if (this.Version.Minor < verRemote.minor && this.Version.Major >= verRemote.major)
+                    else if (this.Version.Minor < verRemote.minor && !(this.Version.Major >= verRemote.major))
                     {
                         Qurre.Log.Warn($"Hey! Your version of FunnyGuns is one minor version behind! Update the plugin if you want to!\nYour version: {this.Version.Major}.{this.Version.Minor}.{this.Version.Build}.{this.Version.Revision}; " +
                             $"Remote version: {verRemote.major}.{verRemote.minor}.{verRemote.patch}.{verRemote.revision}");
                     }
-                    else if (this.Version.Build < verRemote.patch && this.Version.Minor >= verRemote.minor && this.Version.Major >= verRemote.major)
+                    else if (this.Version.Build < verRemote.patch && !(this.Version.Minor >= verRemote.minor && this.Version.Major >= verRemote.major))
                     {
                         Qurre.Log.Info($"Hey! Your version of FunnyGuns is one patch/build version behind! There is no need to update the plugin right away, however, I recommend to do so.\nYour version: {this.Version.Major}.{this.Version.Minor}.{this.Version.Build}.{this.Version.Revision}; " +
                             $"Remote version: {verRemote.major}.{verRemote.minor}.{verRemote.patch}.{verRemote.revision}");
                     }
-                    else if (this.Version.Revision < verRemote.revision && this.Version.Build >= verRemote.patch && this.Version.Minor >= verRemote.minor && this.Version.Major >= verRemote.major)
+                    else if (this.Version.Revision < verRemote.revision && !(this.Version.Build >= verRemote.patch && this.Version.Minor >= verRemote.minor && this.Version.Major >= verRemote.major))
                     {
                         Qurre.Log.Info($"Psst! Your version of FunnyGuns is one revision version behind! Update if you want so!\nYour version: {this.Version.Major}.{this.Version.Minor}.{this.Version.Build}.{this.Version.Revision}; " +
                             $"Remote version: {verRemote.major}.{verRemote.minor}.{verRemote.patch}.{verRemote.revision}");
@@ -173,10 +181,10 @@ namespace FunnyGunsRecoded
                     {
                         isOutdated = false;
                         Qurre.Log.Info("FunnyGuns is up to date!");
-                    }
+                    }*/
                     if (isOutdated)
                     {
-                        Qurre.Log.Info("Plugin is outdated, will be trying to update it rn");
+                        Qurre.Log.Info("<color=white>Autoupdate started!</color>");
                         try
                         {
                             wc.DownloadProgressChanged += wc_DownloadProgressChanged;
@@ -185,7 +193,7 @@ namespace FunnyGunsRecoded
                         }
                         catch (Exception ex)
                         {
-                            Qurre.Log.Warn($"Autoupdate failed! Error: {ex.Message}. Try using fg_forceupdate");
+                            Qurre.Log.Warn($"<color=darkred>Autoupdate failed! Error: {ex.Message}. Try using fg_forceupdate</color>");
                         }
                         //Qurre.Log.Info($"version (remote said): {verRemote.major}.{verRemote.minor}.{verRemote.patch}.{verRemote.revision}");
                     }
@@ -193,18 +201,18 @@ namespace FunnyGunsRecoded
             }
             catch (Exception ex)
             {
-                Qurre.Log.Warn($"Failed to check for updates! There seems to be an issue with the remote! Error: {ex.Message}. Stack trace: {ex.StackTrace}");
+                Qurre.Log.Warn($"<color=darkred>Failed to check for updates! There seems to be an issue with the remote! Error: {ex.Message}</color>");
             }
         }
 
         void wc_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
-            Qurre.Log.Info("Downloading an update. Progress: " + e.ProgressPercentage.ToString());
+            Qurre.Log.Info("<color=orange>Downloading an update. Progress: " + e.ProgressPercentage.ToString() + "</color>");
         }
 
         void wc_DownloadComplete(object sender, AsyncCompletedEventArgs e)
         {
-            Qurre.Log.Info("Successfully updated plugin to current version! Server restart will commence in T-10 seconds!");
+            Qurre.Log.Info("<color=orange>Successfully updated plugin to current version! Server restart will commence in T-10 seconds!</color>");
             Timing.CallDelayed(10f, () => Qurre.API.Server.Restart());
         }
         #endregion
