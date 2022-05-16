@@ -12,7 +12,7 @@ namespace FunnyGunsRecoded
 
         public string Name { get; set; } = "FunnyGuns";
 
-        [Description("Should plugin automatically update itself? Currently, does not work!")]
+        [Description("Should plugin automatically update itself?")]
         public bool Autoupdates { get; set; } = true;
 
         [Description("Avaliable locales: ru, en")]
