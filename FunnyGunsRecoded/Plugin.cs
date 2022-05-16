@@ -19,7 +19,7 @@ namespace FunnyGunsRecoded
 #else
             + " (Release Edition)";
 #endif
-        public override System.Version Version { get; } = new System.Version(0, 7, 2, 0); /* <- plugin version(optional) */
+        public override System.Version Version { get; } = new System.Version(0, 7, 2, 2); /* <- plugin version(optional) */
         public Config CustomConfig { get; private set; } /* <- creating a new config class */
 
         public static bool debugUpdateWarning { get; set; } = false;
@@ -132,6 +132,7 @@ namespace FunnyGunsRecoded
         public override void Disable()
         {
             CustomConfigs.Clear();
+            MutatorLocaleDict.Clear();
             Qurre.Events.Player.Dies -= ev.playerDied;
             Qurre.Events.Player.RoleChange -= ev.roleChanging;
             Qurre.Events.Round.Waiting -= ev.WaitingForPlayers;
