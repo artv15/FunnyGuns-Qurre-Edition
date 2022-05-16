@@ -17,19 +17,19 @@ namespace FunnyGunsRecoded.Classes
                     Locale = new Localisations.ru();
                     Locale.OnInit();
                     Plugin.selectedLocale = Locale;
-                    Qurre.Log.Info("Selected russian localisation!");
+                    Qurre.Log.Info("Selected russian localization!");
                     break;
                 case "en":
                     Locale = new Localisations.en();
                     Locale.OnInit();
                     Plugin.selectedLocale = Locale;
-                    Qurre.Log.Info("Selected english localisation!");
+                    Qurre.Log.Info("Selected english localization!");
                     break;
                 default:
                     Locale = new Localisations.en();
                     Locale.OnInit();
                     Plugin.selectedLocale = Locale;
-                    Qurre.Log.Info("Unknown locale! Defaulted to english localisation!");
+                    Qurre.Log.Info("Unknown locale! Defaulted to english localization!");
                     break;
             }
         }

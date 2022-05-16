@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FunnyGunsRecoded.Localisations
 {
-    public class ru :Interfaces.ILocalisation
+    public class ru : Interfaces.ILocalisation
     {
         public string PrepStage_HUD_START { get; set; } = "<color=yellow> Стадия подготовки.До окончания подготовки осталось</color><color=green> ";
         public string PrepStage_HUD_END { get; set; } = "</color> секунд(ы)" + "\n" +
@@ -36,6 +36,14 @@ namespace FunnyGunsRecoded.Localisations
         public string Stage_HUD_CURRENTSTAGE { get; set; } = "Текущая стадия: ";
         public string Stage_HUD_TIMEBEFORENEXTSTAGE { get; set; } = "До следующей стадии ";
         public string Stage_HUD_SECONDSTRANSLATION { get; set; } = "секунд(ы)";
+        public string InfoCommandText { get; set; } = "\n<color=green>[ Funny Guns => info ]</color>\n" +
+                "<color=green>-- Разработчики --</color>\n" +
+                "<color=yellow>Treeshold#0001 (aka Star Butterfly) - Разработчик</color>\n" +
+                "<color=yellow>Dlorka#9909 (aka Tushkanchik) - Тестер</color>\n\n" +
+                "<color=green>-- Об ивенте --</color>\n" +
+                "<color=yellow>Противостояние двух сторон, хаоса и мога. Задача каждого - истребить вражескую команду.</color>\n" +
+                "<color=yellow>Во время ивента, некоторые механики будут меняться. Например, у всех будет рентгеновское зрение.</color>\n\n" +
+                "<color=grey>Да выживет сильнейшая команда!</color>";
 
         public void OnInit()
         {

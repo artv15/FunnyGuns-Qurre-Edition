@@ -31,6 +31,7 @@ namespace FunnyGunsRecoded.Interfaces
         string EventEnd_CI_WIN { get; set; }
         string EventEnd_MTF_WIN { get; set; }
         string LocdownDeathReason { get; set; }
+        string InfoCommandText { get; set; }
         void OnInit();
     }
 }

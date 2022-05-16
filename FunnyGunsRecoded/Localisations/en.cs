@@ -11,7 +11,8 @@ namespace FunnyGunsRecoded.Localisations
         public string PrepStage_HUD_START { get; set; } = "<color=yellow> Preparation stage. Event begins in</color><color=green> ";
         public string PrepStage_HUD_END { get; set; } = "</color> second(s)" + "\n" +
                             "<color=green>Your task in a nutshell</color>: Eliminate the enemy team. During the event, some mutators will be added. They change the rules of the game\n" +
-                            "<color=green>Elevators are disabled during preparation stage</color>\n";
+                            "<color=green>Elevators are disabled during preparation stage</color>\n" +
+                            "<color=blue>Info about the event and credits are avaliable at .fg_info (~ console)</color>";
         public string InstantDeathHUD { get; set; } = "<color=red>Instant death!</color>\n<color=yellow>All alive players will be damaged by 4 hp every second! Kill the enemy team to win or be the last one standing!</color>";
         public string AlivePlayers_HUD_ALIVE { get; set; } = "Alive: ";
         public string AlivePlayers_HUD_MTF { get; set; } = "MTF Units";
@@ -31,6 +32,14 @@ namespace FunnyGunsRecoded.Localisations
         public string EventEnd_CI_WIN { get; set; } = "<color=green>CI</color>";
         public string EventEnd_MTF_WIN { get; set; } = "<color=blue>MTF</color>";
         public string LocdownDeathReason { get; set; } = "Zone was locked down";
+        public string InfoCommandText { get; set; } = "\n<color=green>[ Funny Guns => info ]</color>\n" +
+                "<color=green>-- Developers --</color>\n" +
+                "<color=yellow>Treeshold#0001 (aka Star Butterfly) - Developer</color>\n" +
+                "<color=yellow>Dlorka#9909 (aka Tushkanchik) - Tester</color>\n\n" +
+                "<color=green>-- About --</color>\n" +
+                "<color=yellow>Team deathmatch. Your goal is to eliminate the enemy team.</color>\n" +
+                "<color=yellow>During the event, mutators will be added, they will alter the gameplay.</color>\n\n" +
+                "<color=grey>Let the strongest team win!</color>";
 
         public void OnInit()
         {

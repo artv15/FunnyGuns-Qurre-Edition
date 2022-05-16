@@ -19,7 +19,7 @@ namespace FunnyGunsRecoded
 #else
             + " (Release Edition)";
 #endif
-        public override System.Version Version { get; } = new System.Version(0, 7, 2, 2); /* <- plugin version(optional) */
+        public override System.Version Version { get; } = new System.Version(0, 7, 2, 3); /* <- plugin version(optional) */
         public Config CustomConfig { get; private set; } /* <- creating a new config class */
 
         public static bool debugUpdateWarning { get; set; } = false;
