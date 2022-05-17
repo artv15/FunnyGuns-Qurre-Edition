@@ -12,8 +12,9 @@ Autoupdates are optional, you can disable them in the config file, but I do not 
 # How to start the event? / Commands
 <ul>
   <li>fg_event start - start the event (RA)</li>
-<li>fg_event stop - stop the event (RA)</li>
-<li>fg_forceupdate - forces an update (Server Console)</li>
+  <li>fg_event stop - stop the event (RA)</li>
+  <li>fg_forceupdate - forces an update (Server Console)</li>
+  <li>fg_debugupdate - forces an update for debug branch (REQUIRES APIKEY) (Server Console)</li>
 </ul>
 
 # How does this plugin work (in a nutshell)
