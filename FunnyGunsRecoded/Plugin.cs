@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -19,8 +20,8 @@ namespace FunnyGunsRecoded
 #else
             + " (Release Edition)";
 #endif
-        public override System.Version Version { get; } = new System.Version(0, 7, 2, 4); /* <- plugin version(optional) */
-        public Config CustomConfig { get; private set; } /* <- creating a new config class */
+        public override System.Version Version { get; } = new System.Version(0, 7, 2, 5); /* <- plugin version(optional) */
+        public static Config CustomConfig { get; private set; } /* <- creating a new config class */
 
         public static bool debugUpdateWarning { get; set; } = false;
 #if DEBUG
@@ -210,6 +211,38 @@ namespace FunnyGunsRecoded
             }
         }
 
+        async Task<bool> reqAsyncRelease()
+        {
+            using (HttpClient hc = new HttpClient())
+            {
+                var result = await hc.GetAsync("https://treesholdapi.ml/FunnyGuns/download.php");
+                if (result.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    Qurre.Log.Error("Update to release failed! Unauthorized!");
+                    return false;
+                }
+                else if (result.StatusCode == HttpStatusCode.OK)
+                {
+                    Qurre.Log.Info("OK! Trying to download...");
+                    Qurre.Log.Info("Downloading an update.");
+                    using (var fs = new FileStream(
+                        Qurre.PluginManager.PluginsDirectory + "/FunnyGunsRecoded.dll",
+                        FileMode.Create))
+                    {
+                        await result.Content.CopyToAsync(fs);
+                    }
+                    Qurre.Log.Info("Successfully updated plugin to current release version! Server restart will commence in T-5 seconds!");
+                    Timing.CallDelayed(5f, () => Qurre.API.Server.Restart());
+                    return true;
+                }
+                else
+                {
+                    Qurre.Log.Error($"Update to newest release failed! Remote error. Errorcode: {(int)result.StatusCode}");
+                    return false;
+                }
+            }
+        }
+
         void checkVersion()
         {
             if (!Plugin.IsDebugEnabled && CustomConfig.Autoupdates)
@@ -240,9 +273,7 @@ namespace FunnyGunsRecoded
                             Qurre.Log.Custom("Autoupdate started!", "FunnyGuns updater", ConsoleColor.DarkGreen);
                             try
                             {
-                                wc.DownloadProgressChanged += wc_DownloadProgressChanged;
-                                wc.DownloadFileCompleted += wc_DownloadComplete;
-                                wc.DownloadFileAsync(new Uri("https://treesholdapi.ml/FunnyGuns/FunnyGunsRecoded.dll"), Qurre.PluginManager.PluginsDirectory + "/FunnyGunsRecoded.dll");
+                                reqAsyncRelease();
                             }
                             catch (Exception ex)
                             {
@@ -258,7 +289,7 @@ namespace FunnyGunsRecoded
             }
             else if (Plugin.IsDebugEnabled)
             {
-                Qurre.Log.Custom($"AutoUpdating is disabled (this is a debug build!). To force an update, use fg_forceupdate.", "FunnyGuns updater", ConsoleColor.Magenta);
+                Qurre.Log.Custom($"AutoUpdating is disabled (this is a debug build!). To force an update, use fg_debugupdate (updates debug build) or fg_forceupdate (switches build to release branch).", "FunnyGuns updater", ConsoleColor.Magenta);
             }
             else
             {
@@ -273,8 +304,8 @@ namespace FunnyGunsRecoded
 
         void wc_DownloadComplete(object sender, AsyncCompletedEventArgs e)
         {
-            Qurre.Log.Custom("Update successful! Server will restart in 10 seconds. If it does not, use softrestart!", "FunnyGuns updater", ConsoleColor.White);
-            Timing.CallDelayed(10f, () => Qurre.API.Server.Restart());
+            Qurre.Log.Custom("Update successful! Server will restart in 5 seconds. If it does not, use softrestart!", "FunnyGuns updater", ConsoleColor.White);
+            Timing.CallDelayed(5f, () => Qurre.API.Server.Restart());
         }
         #endregion
 

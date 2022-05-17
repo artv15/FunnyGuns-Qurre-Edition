@@ -17,5 +17,8 @@ namespace FunnyGunsRecoded
 
         [Description("Avaliable locales: ru, en")]
         public string Locale { get; set; } = "ru";
+
+        [Description("Used for debug build updating. Do not edit it unless you know what are you doing!")]
+        public string APIKey { get; set; } = "test";
     }
 }
