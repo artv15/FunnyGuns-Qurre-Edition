@@ -20,7 +20,7 @@ namespace FunnyGunsRecoded
 #else
             + " (Release Edition)";
 #endif
-        public override System.Version Version { get; } = new System.Version(0, 7, 3, 0); /* <- plugin version(optional) */
+        public override System.Version Version { get; } = new System.Version(0, 7, 3, 1); /* <- plugin version(optional) */
         public static Config CustomConfig { get; private set; } /* <- creating a new config class */
 
         public static bool debugUpdateWarning { get; set; } = false;
@@ -33,6 +33,11 @@ namespace FunnyGunsRecoded
         #endregion
 
         #region globals
+        /// <summary>
+        /// True = requires update from remote.
+        /// </summary>
+        public static bool isOutdated = true;
+
         /// <summary>
         /// Selected locale. Managed by Classes.LocalisationManager
         /// </summary>
@@ -252,7 +257,7 @@ namespace FunnyGunsRecoded
                     {
                         string JSON_raw = wc.DownloadString("https://treesholdapi.ml/FunnyGuns/version.php");
                         version verRemote = JsonSerializer.Deserialize<version>(JSON_raw);
-                        bool isOutdated = true;
+                        isOutdated = true;
                         Version remt = new Version(verRemote.major, verRemote.minor, verRemote.patch, verRemote.revision);
                         int local, remote;
                         local = this.Version.Major * 1000 + this.Version.Minor * 100 + this.Version.Build * 10 + this.Version.Revision;
