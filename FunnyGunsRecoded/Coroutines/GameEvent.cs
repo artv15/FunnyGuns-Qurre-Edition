@@ -10,10 +10,10 @@ namespace FunnyGunsRecoded.Coroutines
         public static IEnumerator<float> gameController()
         {
             Plugin.Stage = 0;
-            Plugin.SecondsBeforeNextStage = 45;
+            Plugin.SecondsBeforeNextStage = 25;
 
             int MTFTickets = 0;
-            int CITickets = 0;
+            int CITickets = 0;  
 
             Timing.RunCoroutine(zoneDecontCoroutine(), "zoneDecont"); //ZONE DECONT (ZONE DECONT (DECONTAMINATION OF ZONES))
 
@@ -120,7 +120,7 @@ namespace FunnyGunsRecoded.Coroutines
                 if (Plugin.SecondsBeforeNextStage <= 0)
                 {
                     Plugin.Stage++;
-                    Plugin.SecondsBeforeNextStage = 90;
+                    Plugin.SecondsBeforeNextStage = 45;
                     Qurre.API.Controllers.Cassie.Send(".g4 .g4 .g4", false, false, true);
                 }
                 yield return Timing.WaitForSeconds(1f);
@@ -151,7 +151,7 @@ namespace FunnyGunsRecoded.Coroutines
 
                     Qurre.API.Controllers.Cassie.Send(".g4 .g4 .g4", false, false, true);
                     Plugin.Stage++;
-                    Plugin.SecondsBeforeNextStage = 90; // Maybe change that to 60?
+                    Plugin.SecondsBeforeNextStage = 80; // Maybe change that to 60?
                     // LCZ lockdown
                     if (Plugin.Stage == 3)
                     {

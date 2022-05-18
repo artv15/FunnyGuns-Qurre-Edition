@@ -94,5 +94,21 @@ namespace FunnyGunsRecoded.Coroutines
                 }
             }
         }
+
+        public static IEnumerator<float> theInvevitable()
+        {
+            while (true)
+            {
+                foreach (var pl in Qurre.API.Player.List)
+                {
+                    if (pl.Zone == Qurre.API.Objects.ZoneType.Surface)
+                    {
+                        pl.Damage(2f, Plugin.selectedLocale.StormDeathReason);
+                        pl.Broadcast(Plugin.selectedLocale.StormBroadcastText, 1, true);
+                    }
+                }
+                yield return Timing.WaitForSeconds(0.25f);
+            }
+        }
     }
 }

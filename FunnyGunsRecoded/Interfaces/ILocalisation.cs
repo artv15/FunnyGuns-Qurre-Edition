@@ -32,6 +32,8 @@ namespace FunnyGunsRecoded.Interfaces
         string EventEnd_MTF_WIN { get; set; }
         string LocdownDeathReason { get; set; }
         string InfoCommandText { get; set; }
+        string StormDeathReason { get; set; }
+        string StormBroadcastText { get; set; }
         void OnInit();
     }
 }

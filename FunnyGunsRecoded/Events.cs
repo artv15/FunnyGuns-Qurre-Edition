@@ -24,10 +24,10 @@ namespace FunnyGunsRecoded
             if (Plugin.isEngaged)
             {
                 ev.Player.Ammo12Gauge = 24;
-                ev.Player.Ammo44Cal = 120;
-                ev.Player.Ammo762 = 120;
-                ev.Player.Ammo9 = 120;
-                ev.Player.Ammo556 = 120;
+                ev.Player.Ammo44Cal = 40;
+                ev.Player.Ammo762 = 100;
+                ev.Player.Ammo9 = 100;
+                ev.Player.Ammo556 = 100;
             }
         }
 
@@ -324,6 +324,16 @@ namespace FunnyGunsRecoded
             {
 
             }));
+
+            Plugin.loadedMutators.Add(new Classes.Mutator("theInevitable", Plugin.getDisplayByCommandName("theInevitable"), () =>
+            {
+                Timing.RunCoroutine(Coroutines.Mutators.theInvevitable(), "theInevitable");
+            }, () =>
+            {
+                Timing.KillCoroutines("theInevitable");
+            }, (ev) => { }, () => { }));
+
+            //Plugin.loadedMutators.Add(new Classes.Mutator("vampirism", Plugin.getDisplayByCommandName("vampirism")));
         }
     }
 }

@@ -44,7 +44,8 @@ namespace FunnyGunsRecoded.Localisations
                 "<color=yellow>Противостояние двух сторон, хаоса и мога. Задача каждого - истребить вражескую команду.</color>\n" +
                 "<color=yellow>Во время ивента, некоторые механики будут меняться. Например, у всех будет рентгеновское зрение.</color>\n\n" +
                 "<color=grey>Да выживет сильнейшая команда!</color>";
-
+        public string StormDeathReason { get; set; } = "Вы замёрзли до смерти";
+        public string StormBroadcastText { get; set; } = "<color=#6cd4dd>На улице слишком холодно! Идите в комплекс немедленно!</color>";
         public void OnInit()
         {
             Plugin.MutatorLocaleDict.Add("passiveRegen", "<color=green>Пассивная регенерация</color>");
@@ -55,6 +56,7 @@ namespace FunnyGunsRecoded.Localisations
             Plugin.MutatorLocaleDict.Add("legalWH", "<color=green>Рентгеновское зрение</color>");
             Plugin.MutatorLocaleDict.Add("bleeding", "<color=red>Кровотечение от огнестрельных ранений</color>");
             Plugin.MutatorLocaleDict.Add("badBullets", "<color=red>Некоторые патроны - холостые</color>");
+            Plugin.MutatorLocaleDict.Add("theInevitable", "<color=#6cd4dd>Буря на поверхности</color>");
         }
     }
 }

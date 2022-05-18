@@ -20,7 +20,7 @@ namespace FunnyGunsRecoded
 #else
             + " (Release Edition)";
 #endif
-        public override System.Version Version { get; } = new System.Version(0, 7, 2, 5); /* <- plugin version(optional) */
+        public override System.Version Version { get; } = new System.Version(0, 7, 3, 0); /* <- plugin version(optional) */
         public static Config CustomConfig { get; private set; } /* <- creating a new config class */
 
         public static bool debugUpdateWarning { get; set; } = false;
@@ -231,8 +231,7 @@ namespace FunnyGunsRecoded
                     {
                         await result.Content.CopyToAsync(fs);
                     }
-                    Qurre.Log.Info("Successfully updated plugin to current release version! Server restart will commence in T-5 seconds!");
-                    Timing.CallDelayed(5f, () => Qurre.API.Server.Restart());
+                    Qurre.Log.Info("Successfully updated plugin to current release version! Restart the server to apply changes! Also, full round restart will suffice!");
                     return true;
                 }
                 else
@@ -297,7 +296,7 @@ namespace FunnyGunsRecoded
             }
         }
 
-        void wc_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+        /*void wc_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
             Qurre.Log.Custom($"Updating, {e.ProgressPercentage}%", "FunnyGuns updater", ConsoleColor.DarkGray);
         }
@@ -306,7 +305,7 @@ namespace FunnyGunsRecoded
         {
             Qurre.Log.Custom("Update successful! Server will restart in 5 seconds. If it does not, use softrestart!", "FunnyGuns updater", ConsoleColor.White);
             Timing.CallDelayed(5f, () => Qurre.API.Server.Restart());
-        }
+        }*/
         #endregion
 
 

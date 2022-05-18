@@ -40,7 +40,8 @@ namespace FunnyGunsRecoded.Localisations
                 "<color=yellow>Team deathmatch. Your goal is to eliminate the enemy team.</color>\n" +
                 "<color=yellow>During the event, mutators will be added, they will alter the gameplay.</color>\n\n" +
                 "<color=grey>Let the strongest team win!</color>";
-
+        public string StormDeathReason { get; set; } = "You froze to death.";
+        public string StormBroadcastText { get; set; } = "<color=#6cd4dd>It's too cold outside! Get back in the facility!</color>";
         public void OnInit()
         {
             Plugin.MutatorLocaleDict.Add("passiveRegen", "<color=green>Passive regeneration</color>");
@@ -51,6 +52,8 @@ namespace FunnyGunsRecoded.Localisations
             Plugin.MutatorLocaleDict.Add("legalWH", "<color=green>X-RAY vision</color>");
             Plugin.MutatorLocaleDict.Add("bleeding", "<color=red>Bleeding gun wounds</color>");
             Plugin.MutatorLocaleDict.Add("badBullets", "<color=red>Blank catridges</color>");
+            Plugin.MutatorLocaleDict.Add("theInevitable", "<color=#6cd4dd>The great storm</color>");
+            //Plugin.MutatorLocaleDict.Add("", "");
         }
     }
 }

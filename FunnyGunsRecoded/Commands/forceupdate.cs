@@ -123,8 +123,8 @@ namespace FunnyGunsRecoded.Commands
                     {
                         await result.Content.CopyToAsync(fs);
                     }
-                    Qurre.Log.Info("Successfully updated plugin to current debug version! Server restart will commence in T-5 seconds!");
-                    Timing.CallDelayed(5f, () => Qurre.API.Server.Restart());
+                    Qurre.Log.Info("Successfully updated plugin to current debug version! Restart the server to apply changes (full round restart will suffice)");
+                    //Timing.CallDelayed(5f, () => Qurre.API.Server.Restart());
                     return true;
                 }
                 else
@@ -142,8 +142,8 @@ namespace FunnyGunsRecoded.Commands
 
         void wc_DownloadComplete(object sender, AsyncCompletedEventArgs e)
         {
-            Qurre.Log.Info("Successfully updated plugin to current version! Server restart will commence in T-5 seconds!");
-            Timing.CallDelayed(5f, () => Qurre.API.Server.Restart());
+            Qurre.Log.Info("Successfully updated plugin to current version!  Restart the server to apply changes (full round restart will suffice)");
+            //Timing.CallDelayed(5f, () => Qurre.API.Server.Restart());
         }
     }
 
