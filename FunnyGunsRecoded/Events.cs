@@ -120,6 +120,20 @@ namespace FunnyGunsRecoded
             }
         }
 
+        public void ItemUsed(Qurre.API.Events.ItemUsedEvent ev)
+        {
+            if (Plugin.isEngaged)
+            {
+                if (ev.Item.TypeId.ToString() == "SCP500")
+                {
+                    foreach (var mut in Plugin.engagedMutators)
+                    {
+                        Timing.CallDelayed(2f, () => mut.usedSCP500.Invoke(ev));
+                    }
+                }
+            }
+        }
+
         public void StopAllEventShit()
         {
             foreach (var mut in Plugin.engagedMutators.ToList())
@@ -182,7 +196,8 @@ namespace FunnyGunsRecoded
                 Timing.KillCoroutines("passiveRegen");
             },
             (ev) => { },
-            () => { }));
+            () => { },
+            (ev) => { }));
 
             Plugin.loadedMutators.Add(new Classes.Mutator("fogOfWar", Plugin.getDisplayByCommandName("fogOfWar"), () =>
             {
@@ -203,7 +218,8 @@ namespace FunnyGunsRecoded
             }, () =>
             {
 
-            }));
+            },
+            (ev) => { }));
 
             Plugin.loadedMutators.Add(new Classes.Mutator("lightsOut", Plugin.getDisplayByCommandName("lightsOut"), () =>
             {
@@ -217,7 +233,8 @@ namespace FunnyGunsRecoded
             }, () =>
             {
 
-            }));
+            },
+            (ev) => { }));
 
             Plugin.loadedMutators.Add(new Classes.Mutator("speed++", Plugin.getDisplayByCommandName("speed++"), () =>
             {
@@ -238,6 +255,10 @@ namespace FunnyGunsRecoded
             }, () =>
             {
 
+            },
+            (ev) => 
+            {
+            ev.Player.EnableEffect(Qurre.API.Objects.EffectType.Scp207);
             }));
 
             Plugin.loadedMutators.Add(new Classes.Mutator("noTeslaGates", Plugin.getDisplayByCommandName("noTeslaGates"), () =>
@@ -260,7 +281,8 @@ namespace FunnyGunsRecoded
             }, () =>
             {
 
-            }));
+            },
+            (ev) => { }));
 
             /*Plugin.loadedMutators.Add(new Classes.Mutator("damage++", "<color=red>Урон увеличен (3x)</color>", () =>
             {
@@ -295,6 +317,10 @@ namespace FunnyGunsRecoded
             }, () =>
             {
 
+            },
+            (ev) => 
+            {
+                ev.Player.EnableEffect(Qurre.API.Objects.EffectType.Visuals939);
             }));
 
             Plugin.loadedMutators.Add(new Classes.Mutator("bleeding", Plugin.getDisplayByCommandName("bleeding"), () =>
@@ -309,7 +335,8 @@ namespace FunnyGunsRecoded
             }, () =>
             {
 
-            }));
+            },
+            (ev) => { }));
 
             Plugin.loadedMutators.Add(new Classes.Mutator("badBullets", Plugin.getDisplayByCommandName("badBullets"), () =>
             {
@@ -323,7 +350,8 @@ namespace FunnyGunsRecoded
             }, () =>
             {
 
-            }));
+            },
+            (ev) => { }));
 
             Plugin.loadedMutators.Add(new Classes.Mutator("theInevitable", Plugin.getDisplayByCommandName("theInevitable"), () =>
             {
@@ -331,7 +359,17 @@ namespace FunnyGunsRecoded
             }, () =>
             {
                 Timing.KillCoroutines("theInevitable");
-            }, (ev) => { }, () => { }));
+            }, (ev) => { }, () => { },
+            (ev) => { }));
+
+            Plugin.loadedMutators.Add(new Classes.Mutator("poob", Plugin.getDisplayByCommandName("poob"), () =>
+            {
+                Plugin.selectedLocale = new Localisations.poob();
+            }, () =>
+            {
+                Classes.LocalisationManager.InitLocalisation(Plugin.CustomConfig.Locale);
+            }, (ev) => { }, () => { },
+            (ev) => { }));
 
             //Plugin.loadedMutators.Add(new Classes.Mutator("vampirism", Plugin.getDisplayByCommandName("vampirism")));
         }

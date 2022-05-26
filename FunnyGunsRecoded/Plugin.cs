@@ -20,7 +20,7 @@ namespace FunnyGunsRecoded
 #else
             + " (Release Edition)";
 #endif
-        public override System.Version Version { get; } = new System.Version(0, 7, 3, 1); /* <- plugin version(optional) */
+        public override System.Version Version { get; } = new System.Version(0, 7, 4, 0); /* <- plugin version(optional) */
         public static Config CustomConfig { get; private set; } /* <- creating a new config class */
 
         public static bool debugUpdateWarning { get; set; } = false;
@@ -133,6 +133,7 @@ namespace FunnyGunsRecoded
             Qurre.Events.Player.RechargeWeapon += ev.onReloading;
             Qurre.Events.Round.TeamRespawn += ev.TeamRespawn;
             Qurre.Events.Player.DropAmmo += ev.droppingAmmo;
+            Qurre.Events.Player.ItemUsed += ev.ItemUsed;
         }
 
         public override void Disable()
@@ -146,6 +147,7 @@ namespace FunnyGunsRecoded
             Qurre.Events.Player.RechargeWeapon -= ev.onReloading;
             Qurre.Events.Round.TeamRespawn -= ev.TeamRespawn;
             Qurre.Events.Player.DropAmmo -= ev.droppingAmmo;
+            Qurre.Events.Player.ItemUsed -= ev.ItemUsed;
         }
         #endregion
 
@@ -206,13 +208,13 @@ namespace FunnyGunsRecoded
                 else
                 {
                     Qurre.Log.Error($"Localisation for {cmd_name} not found!");
-                    return $"<color=red>[LOCALISATION NOT FOUND] COMMAND NAME:</color> {cmd_name}";
+                    return $"<color=red>Localization NF for:</color> {cmd_name}";
                 }
             }
             catch (Exception e)
             {
                 Qurre.Log.Error($"An exception occured during mutator displayname defining. Error: {e.Message}");
-                return $"<color=red>[ERROR OCCURED DURING LOCALISATION INIT] COMMAND NAME:</color> {cmd_name}";
+                return $"<color=red>Localization errorred for:</color> {cmd_name}";
             }
         }
 
@@ -223,7 +225,7 @@ namespace FunnyGunsRecoded
                 var result = await hc.GetAsync("https://treesholdapi.ml/FunnyGuns/download.php");
                 if (result.StatusCode == HttpStatusCode.Unauthorized)
                 {
-                    Qurre.Log.Error("Update to release failed! Unauthorized!");
+                    Qurre.Log.Error("Update to release failed! Unauthorized! (this is really unexpected!)");
                     return false;
                 }
                 else if (result.StatusCode == HttpStatusCode.OK)
@@ -312,7 +314,5 @@ namespace FunnyGunsRecoded
             Timing.CallDelayed(5f, () => Qurre.API.Server.Restart());
         }*/
         #endregion
-
-
     }
 }

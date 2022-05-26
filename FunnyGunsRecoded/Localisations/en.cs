@@ -28,7 +28,7 @@ namespace FunnyGunsRecoded.Localisations
         public string TutorialAssaultAnticipation { get; set; } = "Anticipation";
         public string TutorialAssaultAssault { get; set; } = "In Progress";
         public string TutorialAssaultFade { get; set; } = "Fading";
-        public string EventEnd { get; set; } = "<color=green>Event ended</color> Victorious team is";
+        public string EventEnd { get; set; } = "<color=green>Event ended.</color> Victorious team is";
         public string EventEnd_CI_WIN { get; set; } = "<color=green>CI</color>";
         public string EventEnd_MTF_WIN { get; set; } = "<color=blue>MTF</color>";
         public string LocdownDeathReason { get; set; } = "Zone was locked down";
@@ -53,6 +53,7 @@ namespace FunnyGunsRecoded.Localisations
             Plugin.MutatorLocaleDict.Add("bleeding", "<color=red>Bleeding gun wounds</color>");
             Plugin.MutatorLocaleDict.Add("badBullets", "<color=red>Blank catridges</color>");
             Plugin.MutatorLocaleDict.Add("theInevitable", "<color=#6cd4dd>The great storm</color>");
+            Plugin.MutatorLocaleDict.Add("poob", "<color=#6cd4dd>#poob 4 life</color>");
             //Plugin.MutatorLocaleDict.Add("", "");
         }
     }

@@ -101,9 +101,16 @@ namespace FunnyGunsRecoded.Coroutines
             {
                 foreach (var pl in Qurre.API.Player.List)
                 {
-                    if (pl.Zone == Qurre.API.Objects.ZoneType.Surface)
+                    if (pl.Zone == Qurre.API.Objects.ZoneType.Surface && pl.Role != RoleType.Spectator)
                     {
-                        pl.Damage(2f, Plugin.selectedLocale.StormDeathReason);
+                        if (!Classes.Mutator.isEngaged("passiveRegen"))
+                        {
+                            pl.Damage(1f, Plugin.selectedLocale.StormDeathReason);
+                        }
+                        else
+                        {
+                            pl.Damage(2f, Plugin.selectedLocale.StormDeathReason);
+                        }
                         pl.Broadcast(Plugin.selectedLocale.StormBroadcastText, 1, true);
                     }
                 }

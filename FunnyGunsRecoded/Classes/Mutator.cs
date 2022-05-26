@@ -18,7 +18,7 @@ namespace FunnyGunsRecoded.Classes
         /// <param name="_disengaged">Executed upon mutator deselection</param>
         /// <param name="_respawn">Executed upon player's respawn, passes through Qurre.API.Events.RoleChangeEvent (args).</param>
         /// <param name="_stageChange">Executed upon stage incrementation</param>
-        public Mutator(string _commandName, string _displayName, Action _engaged, Action _disengaged, Action<Qurre.API.Events.RoleChangeEvent> _respawn, Action _stageChange)
+        public Mutator(string _commandName, string _displayName, Action _engaged, Action _disengaged, Action<Qurre.API.Events.RoleChangeEvent> _respawn, Action _stageChange, Action<Qurre.API.Events.ItemUsedEvent> _usedSCP500)
         {
             commandName = _commandName;
             displayName = _displayName;
@@ -26,6 +26,7 @@ namespace FunnyGunsRecoded.Classes
             disengaged = _disengaged;
             respawn = _respawn;
             stageChange = _stageChange;
+            usedSCP500 = _usedSCP500;
         }
 
         /// <summary>
@@ -57,6 +58,11 @@ namespace FunnyGunsRecoded.Classes
         /// Executed upon stage incrementation
         /// </summary>
         public Action stageChange;
+
+        /// <summary>
+        /// What to do it scp500 was used? passes through ItemUsedEvent
+        /// </summary>
+        public Action<Qurre.API.Events.ItemUsedEvent> usedSCP500;
 
         /// <summary>
         /// Checks, whether mutator with given commandName is engaged or not

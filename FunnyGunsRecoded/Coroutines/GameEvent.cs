@@ -206,17 +206,8 @@ namespace FunnyGunsRecoded.Coroutines
             while (true)
             {
                 int mtf = 0, ci = 0;
-                foreach (var pl in Qurre.API.Player.List)
-                {
-                    if (pl.Role == RoleType.NtfSergeant)
-                    {
-                        mtf++;
-                    }
-                    else if (pl.Role == RoleType.ChaosRifleman)
-                    {
-                        ci++;
-                    }
-                }
+                mtf = Qurre.API.Player.List.Count(pl => pl.Role == RoleType.NtfSergeant);
+                ci = Qurre.API.Player.List.Count(pl => pl.Role == RoleType.ChaosRifleman);
                 if (Plugin.checkForEndgame)
                 {
                     if (mtf == 0 || ci == 0)
@@ -280,7 +271,7 @@ namespace FunnyGunsRecoded.Coroutines
                     spectators++;
                 }
             }
-            if (!(UnityEngine.Random.Range(0, 11) < Plugin.HowManyDeathSinceLastAssault) && !(Plugin.AssaultWasStaredHowManyTimes < 1))
+            if (Plugin.Stage != 2) //Now it's forced!
             {
                 
                 while (true)
@@ -309,7 +300,7 @@ namespace FunnyGunsRecoded.Coroutines
                     catch (Exception ex)
                     {
                         Qurre.Log.Error($"An error occured during mutator assignment! Error: {ex.Message}. Adding a non-functional error mutator!");
-                        var errorMutator = new Classes.Mutator("error", "<color=red>Error.</color>", () => { }, () => { }, (ev) => { }, () => { });
+                        var errorMutator = new Classes.Mutator("error", "<color=red>Error.</color>", () => { }, () => { }, (ev) => { }, () => { }, (ev) => { });
                         Plugin.engagedMutators.Add(errorMutator);
                         break;
                     }
@@ -319,10 +310,10 @@ namespace FunnyGunsRecoded.Coroutines
             {
                 Plugin.HowManyDeathSinceLastAssault = 0; //Resetting deaths...
                 Plugin.AssaultWasStaredHowManyTimes = 1; //Hotfix, but it works, I guess...
-                Qurre.Log.Info($"Called for mutator selection. Bypassed normal assignment, due to killAmount. Assigning tutorialAssault mutator.");
+                Qurre.Log.Info($"Called for mutator selection. Bypassed normal assignment. Assigning tutorialAssault mutator.");
                 var mut = new Classes.Mutator("tutorialAssault", $"<color=#07f773>{Plugin.selectedLocale.TutorialAssaultBaseName} ({Plugin.selectedLocale.TutorialAssaultPrep})</color>", () =>
                 {
-                    Timing.CallDelayed(1f, () => Plugin.SecondsBeforeNextStage = 129); //This is really specific!
+                    Timing.CallDelayed(1f, () => Plugin.SecondsBeforeNextStage = 99); //This is really specific! (no it's not u past me!)
                     Timing.RunCoroutine(Coroutines.Mutators.tutorialAssault_engaged(), "TutorialAssault");
                 }, () =>
                 {
@@ -333,7 +324,7 @@ namespace FunnyGunsRecoded.Coroutines
                 }, () =>
                 {
 
-                });
+                }, (ev) => { });
                 mut.engaged.Invoke();
                 Plugin.engagedMutators.Add(mut);
             }

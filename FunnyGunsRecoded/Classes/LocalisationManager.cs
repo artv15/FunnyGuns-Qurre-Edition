@@ -10,6 +10,7 @@ namespace FunnyGunsRecoded.Classes
     {
         public static void InitLocalisation(string locale)
         {
+            Plugin.MutatorLocaleDict.Clear();
             Interfaces.ILocalisation Locale;
             switch (locale.ToLower())
             {

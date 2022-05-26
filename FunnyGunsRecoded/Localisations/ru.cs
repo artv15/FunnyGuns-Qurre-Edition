@@ -57,6 +57,7 @@ namespace FunnyGunsRecoded.Localisations
             Plugin.MutatorLocaleDict.Add("bleeding", "<color=red>Кровотечение от огнестрельных ранений</color>");
             Plugin.MutatorLocaleDict.Add("badBullets", "<color=red>Некоторые патроны - холостые</color>");
             Plugin.MutatorLocaleDict.Add("theInevitable", "<color=#6cd4dd>Буря на поверхности</color>");
+            Plugin.MutatorLocaleDict.Add("poob", "<color=#6cd4dd>#poob навсегда</color>");
         }
     }
 }

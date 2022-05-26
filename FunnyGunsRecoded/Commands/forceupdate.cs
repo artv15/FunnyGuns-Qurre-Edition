@@ -103,34 +103,34 @@ namespace FunnyGunsRecoded.Commands
         {
             using (HttpClient hc = new HttpClient())
             {
-                var auth = new authDebugUpdate();
-                auth.APIKey = Plugin.CustomConfig.APIKey;
-                string post = "{\"APIKey\": \"" + auth.APIKey + "\"}";
-                var content = new StringContent(post, Encoding.UTF8, "application/json");
-                var result = await hc.PostAsync("https://treesholdapi.ml/FunnyGunsDevelopment/download.php", content);
-                if (result.StatusCode == HttpStatusCode.Unauthorized)
+                var auth = new authDebugUpdate(); // Generating new class for post requests
+                auth.APIKey = Plugin.CustomConfig.APIKey; // Assigning an APIKey from config file
+                string post = "{\"APIKey\": \"" + auth.APIKey + "\"}"; // Posting APIKey to remote
+                var content = new StringContent(post, Encoding.UTF8, "application/json"); // Generating content
+                var result = await hc.PostAsync("https://treesholdapi.ml/FunnyGunsDevelopment/download.php", content); // Sending HTTP POST request.
+                if (result.StatusCode == HttpStatusCode.Unauthorized) // Invalid apikey
                 {
-                    Qurre.Log.Error("Update to debug failed! Invalid APIKey!");
-                    return false;
+                    Qurre.Log.Error("Update to debug failed! Invalid APIKey! If you believe that this is a mistake and the key is correct, contact Treeshold#0001. Maybe the key is expired.");
+                    return false; // returning false = not cool
                 }
-                else if (result.StatusCode == HttpStatusCode.OK)
+                else if (result.StatusCode == HttpStatusCode.OK) // Key is valid, go on
                 {
                     Qurre.Log.Info("OK! Trying to download...");
                     Qurre.Log.Info("Downloading an update.");
-                    using (var fs = new FileStream(
-                        Qurre.PluginManager.PluginsDirectory + "/FunnyGunsRecoded.dll",
-                        FileMode.Create))
+                    using (var fs = new FileStream( // Creating File stream to replace file in %appdata%/Qurre/Plugins
+                        Qurre.PluginManager.PluginsDirectory + "/FunnyGunsRecoded.dll", // This file
+                        FileMode.Create)) // In create mode
                     {
-                        await result.Content.CopyToAsync(fs);
+                        await result.Content.CopyToAsync(fs); // Awaiting until we successfuilly replace this file with a new one (or create new one)
                     }
-                    Qurre.Log.Info("Successfully updated plugin to current debug version! Restart the server to apply changes (full round restart will suffice)");
+                    Qurre.Log.Info("Successfully updated plugin to current debug version! Restart the server to apply changes (full round restart will suffice)"); // Responding that we did it, yay!
                     //Timing.CallDelayed(5f, () => Qurre.API.Server.Restart());
-                    return true;
+                    return true; // returning true = cool
                 }
-                else
+                else // Other status code, maybe we fucked up
                 {
                     Qurre.Log.Error($"Update to newest debug failed! Remote error. Errorcode: {(int)result.StatusCode}");
-                    return false;
+                    return false; // returning false = not cool
                 }
             }
         }
