@@ -31,7 +31,7 @@ namespace FunnyGunsRecoded.Commands
             }
             else
             {
-                reqAsyncRelease();
+                Task.Run(() => reqAsyncRelease());
                 response = "Forcing an update!";
                 return true;
             }
@@ -88,11 +88,11 @@ namespace FunnyGunsRecoded.Commands
 
         public string[] Aliases => null;
 
-        public string Description => "Forcibly update plugin to the latest DEBUG version <color=darkred>(Requires APIKEY)</color>";
+        public string Description => "Forcibly update plugin to the latest DEBUG version (Requires APIKEY)";
 
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
-             reqAsyncDebug();
+             Task.Run(() => reqAsyncDebug());
              response = "Forcing an update!";
              return true;
         }

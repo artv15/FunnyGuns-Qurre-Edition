@@ -20,7 +20,7 @@ namespace FunnyGunsRecoded
 #else
             + " (Release Edition)";
 #endif
-        public override System.Version Version { get; } = new System.Version(0, 7, 4, 0); /* <- plugin version(optional) */
+        public override System.Version Version { get; } = new System.Version(0, 7, 4, 1); /* <- plugin version(optional) */
         public static Config CustomConfig { get; private set; } /* <- creating a new config class */
 
         public static bool debugUpdateWarning { get; set; } = false;
@@ -123,7 +123,7 @@ namespace FunnyGunsRecoded
         {
             CustomConfig = new Config();
             CustomConfigs.Add(CustomConfig);
-            checkVersion();
+            Task.Run(checkVersion);
             Classes.LocalisationManager.InitLocalisation(CustomConfig.Locale);
             ev = new Events();
             Qurre.Events.Player.Dies += ev.playerDied;
